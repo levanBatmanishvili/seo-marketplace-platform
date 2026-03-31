@@ -1,0 +1,15 @@
+.site-main {
+    min-height: calc(100vh - 120px);
+  }
+  
+  .site-main__container {
+    padding: 20px 16px;
+  }
+  
+  @media (min-width: 768px) {
+    .site-main__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+  }
