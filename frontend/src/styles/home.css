@@ -24,6 +24,39 @@
   .home-hero__button:hover {
     opacity: 0.9;
   }
+
+  .home-how {
+    padding: 40px 0;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .home-how__title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  
+  .home-how__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .home-how__step {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  
+  .home-how__step-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .home-how__step-text {
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+  
   
   @media (min-width: 768px) {
     .home-hero__title {
@@ -33,4 +66,12 @@
     .home-hero {
       padding: 60px 0;
     }
+
+    .home-how__steps {
+        flex-direction: row;
+      }
+    
+      .home-how__step {
+        flex: 1;
+      }
   }
