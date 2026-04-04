@@ -41,7 +41,40 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
-  return res.status(501).json({
-    message: "Login endpoint not implemented yet.",
-  });
+  try {
+    const { email, password } = req.validatedData;
+
+    const user = await User.findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+
+    const isPasswordValid = await argon2.verify(user.password, password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Login successful.",
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
 }
