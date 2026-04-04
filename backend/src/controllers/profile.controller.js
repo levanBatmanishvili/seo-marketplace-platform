@@ -2,7 +2,7 @@ import Profile from "../models/profile.model.js";
 
 export async function createProfile(req, res) {
   try {
-    const { displayName, bio, avatarUrl } = req.body;
+    const { displayName, bio, avatarUrl } = req.validatedData;
 
     const existingProfile = await Profile.findOne({
       where: { userId: req.user.id },
