@@ -3,6 +3,7 @@ import cors from "cors";
 import sequelize from "./config/database.js";
 import "./models/user.model.js";
 import "./models/profile.model.js";
+import "./models/expert-profile.model.js";
 import authRouter from "./routers/auth.router.js";
 import userRouter from "./routers/user.router.js";
 import profileRouter from "./routers/profile.router.js";
