@@ -57,3 +57,36 @@ export async function getMyProfile(req, res) {
     });
   }
 }
+
+export async function updateMyProfile(req, res) {
+    try {
+      const profile = await Profile.findOne({
+        where: { userId: req.user.id },
+      });
+  
+      if (!profile) {
+        return res.status(404).json({
+          message: "Profile not found.",
+        });
+      }
+  
+      const { displayName, bio, avatarUrl } = req.validatedData;
+  
+      if (displayName !== undefined) profile.displayName = displayName;
+      if (bio !== undefined) profile.bio = bio;
+      if (avatarUrl !== undefined) profile.avatarUrl = avatarUrl;
+  
+      await profile.save();
+  
+      return res.status(200).json({
+        message: "Profile updated successfully.",
+        profile,
+      });
+    } catch (error) {
+      console.error("Update profile error:", error);
+  
+      return res.status(500).json({
+        message: "Internal server error.",
+      });
+    }
+  }
