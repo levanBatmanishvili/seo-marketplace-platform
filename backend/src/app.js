@@ -7,6 +7,7 @@ import "./models/expert-profile.model.js";
 import authRouter from "./routers/auth.router.js";
 import userRouter from "./routers/user.router.js";
 import profileRouter from "./routers/profile.router.js";
+import expertProfileRouter from "./routers/expert-profile.router.js";
 
 
 const app = express();
@@ -32,6 +33,7 @@ sequelize
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/profiles", profileRouter);
+app.use("/api/expert-profiles", expertProfileRouter);
 
 // Test route
 app.use("/api/auth", authRouter);
