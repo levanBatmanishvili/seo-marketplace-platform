@@ -1,5 +1,6 @@
 import argon2 from "argon2";
 import User from "../models/user.model.js";
+import { generateToken } from "../utils/jwt.js";
 
 export async function register(req, res) {
   try {
@@ -61,6 +62,11 @@ export async function login(req, res) {
         message: "Invalid email or password.",
       });
     }
+
+    const token = generateToken({
+      id: user.id,
+      role: user.role,
+    });
 
     return res.status(200).json({
       message: "Login successful.",
