@@ -29,7 +29,7 @@ export async function createExpertProfile(req, res) {
       });
     }
 
-    const { specialties, experienceLevel, portfolioUrl } = req.body;
+    const { specialties, experienceLevel, portfolioUrl } = req.validatedData;
 
     const expertProfile = await ExpertProfile.create({
       specialties,
