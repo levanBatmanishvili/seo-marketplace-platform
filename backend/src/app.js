@@ -3,6 +3,7 @@ import cors from "cors";
 import sequelize from "./config/database.js";
 import "./models/user.model.js";
 import authRouter from "./routers/auth.router.js";
+import userRouter from "./routers/user.router.js";
 
 
 const app = express();
@@ -23,6 +24,10 @@ sequelize
   .sync()
   .then(() => console.log("Database synchronized"))
   .catch((error) => console.error("Sync error:", error));
+
+  // Routes
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 // Test route
 app.use("/api/auth", authRouter);
