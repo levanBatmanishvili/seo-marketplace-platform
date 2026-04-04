@@ -70,6 +70,7 @@ export async function login(req, res) {
 
     return res.status(200).json({
       message: "Login successful.",
+      token,
       user: {
         id: user.id,
         email: user.email,
