@@ -5,6 +5,7 @@ import "./models/user.model.js";
 import "./models/profile.model.js";
 import authRouter from "./routers/auth.router.js";
 import userRouter from "./routers/user.router.js";
+import profileRouter from "./routers/profile.router.js";
 
 
 const app = express();
@@ -29,6 +30,7 @@ sequelize
   // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/profiles", profileRouter);
 
 // Test route
 app.use("/api/auth", authRouter);
