@@ -7,6 +7,7 @@ import userRouter from "./routers/user.router.js";
 import profileRouter from "./routers/profile.router.js";
 import expertProfileRouter from "./routers/expert-profile.router.js";
 import needRouter from "./routers/need.router.js";
+import relationRouter from "./routers/relation.router.js";
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/users", userRouter);
 app.use("/api/profiles", profileRouter);
 app.use("/api/expert-profiles", expertProfileRouter);
 app.use("/api/needs", needRouter);
+app.use("/api/relations", relationRouter);
 
 // Test route
 app.use("/api/auth", authRouter);
