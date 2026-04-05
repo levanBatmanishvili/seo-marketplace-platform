@@ -2,7 +2,7 @@ import Need from "../models/need.model.js";
 
 export async function createNeed(req, res) {
   try {
-    const { title, description, status } = req.body;
+    const { title, description, status } = req.validatedData;
 
     const need = await Need.create({
       title,
