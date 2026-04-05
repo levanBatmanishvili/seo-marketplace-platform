@@ -5,6 +5,7 @@ import Profile from "./profile.model.js";
 import ExpertProfile from "./expert-profile.model.js";
 import Need from "./need.model.js";
 import Relation from "./relation.model.js";
+import Message from "./message.model.js";
 
 // =========================
 // RELATIONS
@@ -55,4 +56,26 @@ User.hasMany(Relation, {
     as: "need",
   });
 
-export { sequelize, User, Profile, ExpertProfile, Need, Relation };
+  // Relation → Messages
+Relation.hasMany(Message, {
+  foreignKey: "relationId",
+  as: "messages",
+});
+
+Message.belongsTo(Relation, {
+  foreignKey: "relationId",
+  as: "relation",
+});
+
+// User → Messages
+User.hasMany(Message, {
+  foreignKey: "senderId",
+  as: "sentMessages",
+});
+
+Message.belongsTo(User, {
+  foreignKey: "senderId",
+  as: "sender",
+});
+
+export { sequelize, User, Profile, ExpertProfile, Need, Relation, Message };
