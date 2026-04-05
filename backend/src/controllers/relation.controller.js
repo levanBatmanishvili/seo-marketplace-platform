@@ -2,7 +2,7 @@ import { Relation, Need } from "../models/index.js";
 
 export async function createRelation(req, res) {
   try {
-    const { receiverId, needId, message } = req.body;
+    const { receiverId, needId, message } = req.validatedData;
 
     const need = await Need.findByPk(needId);
 
