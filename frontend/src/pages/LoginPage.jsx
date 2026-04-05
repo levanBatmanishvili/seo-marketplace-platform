@@ -1,7 +1,48 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { loginUser } from "../services/authService";
 import "../styles/login.css";
 
 export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      const data = await loginUser(formData);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      setSuccessMessage("Login successful.");
+      setFormData({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
+
   return (
     <section className="login-page">
       <h1 className="login-page__title">Login</h1>
@@ -9,7 +50,7 @@ export default function LoginPage() {
         Access your account to manage your SEO projects and connections.
       </p>
 
-      <form className="login-form">
+      <form className="login-form" onSubmit={handleSubmit}>
         <div className="login-form__group">
           <label htmlFor="email" className="login-form__label">
             Email
@@ -20,6 +61,8 @@ export default function LoginPage() {
             name="email"
             className="login-form__input"
             placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -33,6 +76,8 @@ export default function LoginPage() {
             name="password"
             className="login-form__input"
             placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
           />
         </div>
 
@@ -40,6 +85,9 @@ export default function LoginPage() {
           Sign In
         </button>
       </form>
+
+      {successMessage && <p className="login-page__success">{successMessage}</p>}
+      {errorMessage && <p className="login-page__error">{errorMessage}</p>}
 
       <p className="login-page__footer">
         Don&apos;t have an account? <Link to="/register">Create one</Link>

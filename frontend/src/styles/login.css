@@ -57,3 +57,15 @@
     text-align: center;
     color: #6b7280;
   }
+
+  .login-page__success {
+    margin-top: 16px;
+    color: #15803d;
+    text-align: center;
+  }
+  
+  .login-page__error {
+    margin-top: 16px;
+    color: #dc2626;
+    text-align: center;
+  }
