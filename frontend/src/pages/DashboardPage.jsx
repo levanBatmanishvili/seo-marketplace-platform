@@ -1,4 +1,5 @@
 import { useAuth } from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 import "../styles/dashboard.css";
 
 export default function DashboardPage() {
@@ -17,6 +18,7 @@ export default function DashboardPage() {
       </p>
 
       <div className="dashboard__grid">
+      <Link to="/profile" className="dashboard__card">My Profile</Link>
         <div className="dashboard__card">My Profile</div>
         <div className="dashboard__card">My Needs</div>
         <div className="dashboard__card">My Relations</div>
