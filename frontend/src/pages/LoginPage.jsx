@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/login.css";
 
 export default function LoginPage() {
+  const { login } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,8 +33,7 @@ export default function LoginPage() {
     try {
       const data = await loginUser(formData);
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      login(data.token, data.user);
 
       setSuccessMessage("Login successful.");
       setFormData({
