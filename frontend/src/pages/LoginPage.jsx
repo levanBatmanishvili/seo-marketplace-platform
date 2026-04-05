@@ -1,11 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/login.css";
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,8 +39,8 @@ export default function LoginPage() {
 
     try {
       const data = await loginUser(formData);
-
       login(data.token, data.user);
+      navigate("/dashboard");
 
       setSuccessMessage("Login successful.");
       setFormData({
