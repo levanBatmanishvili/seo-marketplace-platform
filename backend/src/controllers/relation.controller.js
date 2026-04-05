@@ -67,3 +67,71 @@ export async function getMyRelations(req, res) {
     });
   }
 }
+
+export async function acceptRelation(req, res) {
+  try {
+    const { id } = req.params;
+
+    const relation = await Relation.findByPk(id);
+
+    if (!relation) {
+      return res.status(404).json({
+        message: "Relation not found.",
+      });
+    }
+
+    if (relation.receiverId !== req.user.id) {
+      return res.status(403).json({
+        message: "You are not allowed to accept this relation.",
+      });
+    }
+
+    relation.status = "accepted";
+    await relation.save();
+
+    return res.status(200).json({
+      message: "Relation accepted successfully.",
+      relation,
+    });
+  } catch (error) {
+    console.error("Accept relation error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
+}
+
+export async function rejectRelation(req, res) {
+  try {
+    const { id } = req.params;
+
+    const relation = await Relation.findByPk(id);
+
+    if (!relation) {
+      return res.status(404).json({
+        message: "Relation not found.",
+      });
+    }
+
+    if (relation.receiverId !== req.user.id) {
+      return res.status(403).json({
+        message: "You are not allowed to reject this relation.",
+      });
+    }
+
+    relation.status = "rejected";
+    await relation.save();
+
+    return res.status(200).json({
+      message: "Relation rejected successfully.",
+      relation,
+    });
+  } catch (error) {
+    console.error("Reject relation error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
+}
