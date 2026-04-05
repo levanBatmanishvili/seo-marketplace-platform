@@ -31,6 +31,26 @@
     opacity: 0.7;
   }
 
+  .site-header__user {
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+  
+  .site-header__button {
+    border: none;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .site-header__button:hover {
+    opacity: 0.92;
+  }
+
   @media (min-width: 768px) {
     .site-header__container {
       max-width: 1200px;
@@ -39,5 +59,25 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+    }
+
+    .site-header__nav {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-header__logo {
+      font-size: 1.4rem;
+    }
+  
+    .site-header__link {
+      font-size: 1rem;
+    }
+  
+    .site-header__button {
+      padding: 10px 16px;
     }
   }
