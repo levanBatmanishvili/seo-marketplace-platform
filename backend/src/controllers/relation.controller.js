@@ -80,6 +80,12 @@ export async function acceptRelation(req, res) {
       });
     }
 
+    if (relation.status !== "pending") {
+      return res.status(400).json({
+        message: "This relation has already been finalized.",
+      });
+    }
+
     if (relation.receiverId !== req.user.id) {
       return res.status(403).json({
         message: "You are not allowed to accept this relation.",
@@ -111,6 +117,12 @@ export async function rejectRelation(req, res) {
     if (!relation) {
       return res.status(404).json({
         message: "Relation not found.",
+      });
+    }
+
+    if (relation.status !== "pending") {
+      return res.status(400).json({
+        message: "This relation has already been finalized.",
       });
     }
 
