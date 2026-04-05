@@ -2,13 +2,7 @@ import express from "express";
 import cors from "cors";
 import sequelize from "./config/database.js";
 import "./models/index.js";
-import authRouter from "./routers/auth.router.js";
-import userRouter from "./routers/user.router.js";
-import profileRouter from "./routers/profile.router.js";
-import expertProfileRouter from "./routers/expert-profile.router.js";
-import needRouter from "./routers/need.router.js";
-import relationRouter from "./routers/relation.router.js";
-
+import registerRoutes from "./routers/index.js";
 
 const app = express();
 
@@ -30,15 +24,9 @@ sequelize
   .catch((error) => console.error("Sync error:", error));
 
   // Routes
-app.use("/api/auth", authRouter);
-app.use("/api/users", userRouter);
-app.use("/api/profiles", profileRouter);
-app.use("/api/expert-profiles", expertProfileRouter);
-app.use("/api/needs", needRouter);
-app.use("/api/relations", relationRouter);
+  registerRoutes(app);
 
 // Test route
-app.use("/api/auth", authRouter);
 app.get("/api", (req, res) => {
   res.json({ message: "API is running" });
 });
