@@ -46,15 +46,5 @@ ExpertProfile.init(
   }
 );
 
-// Associations
-Profile.hasOne(ExpertProfile, {
-  foreignKey: "profileId",
-  as: "expertProfile",
-});
-
-ExpertProfile.belongsTo(Profile, {
-  foreignKey: "profileId",
-  as: "profile",
-});
 
 export default ExpertProfile;

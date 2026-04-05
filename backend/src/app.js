@@ -1,13 +1,12 @@
 import express from "express";
 import cors from "cors";
 import sequelize from "./config/database.js";
-import "./models/user.model.js";
-import "./models/profile.model.js";
-import "./models/expert-profile.model.js";
+import "./models/index.js";
 import authRouter from "./routers/auth.router.js";
 import userRouter from "./routers/user.router.js";
 import profileRouter from "./routers/profile.router.js";
 import expertProfileRouter from "./routers/expert-profile.router.js";
+import needRouter from "./routers/need.router.js";
 
 
 const app = express();
@@ -34,6 +33,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/profiles", profileRouter);
 app.use("/api/expert-profiles", expertProfileRouter);
+app.use("/api/needs", needRouter);
 
 // Test route
 app.use("/api/auth", authRouter);

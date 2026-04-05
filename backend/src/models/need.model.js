@@ -2,9 +2,9 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database.js";
 import User from "./user.model.js";
 
-class Profile extends Model {}
+class Need extends Model {}
 
-Profile.init(
+Need.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,25 +12,25 @@ Profile.init(
       primaryKey: true,
     },
 
-    displayName: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
 
-    bio: {
+    description: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
 
-    avatarUrl: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    status: {
+      type: DataTypes.ENUM("open", "in_progress", "completed"),
+      allowNull: false,
+      defaultValue: "open",
     },
 
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         model: "users",
         key: "id",
@@ -39,11 +39,11 @@ Profile.init(
   },
   {
     sequelize,
-    modelName: "Profile",
-    tableName: "profiles",
+    modelName: "Need",
+    tableName: "needs",
     timestamps: true,
   }
 );
 
 
-export default Profile;
+export default Need;
