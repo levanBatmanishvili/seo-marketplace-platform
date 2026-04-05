@@ -80,3 +80,15 @@
       flex: 1;
     }
   }
+
+  .register-page__success {
+    margin-top: 16px;
+    color: #15803d;
+    text-align: center;
+  }
+  
+  .register-page__error {
+    margin-top: 16px;
+    color: #dc2626;
+    text-align: center;
+  }

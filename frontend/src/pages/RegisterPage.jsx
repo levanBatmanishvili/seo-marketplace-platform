@@ -1,106 +1,100 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../services/authService";
 import "../styles/register.css";
 
 export default function RegisterPage() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    role: "client",
+  });
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      const data = await registerUser(formData);
+
+      setSuccessMessage("Account created successfully. You can now log in.");
+      setFormData({
+        email: "",
+        password: "",
+        role: "client",
+      });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
+
   return (
     <section className="register-page">
-      <h1 className="register-page__title">Create your account</h1>
+      <h1 className="register-page__title">Create an account</h1>
       <p className="register-page__text">
-        Join the platform as a website owner or SEO expert.
+        Join the platform as a client or an SEO expert.
       </p>
 
-      <form className="register-form">
-        <div className="register-form__row">
-          <div className="register-form__group">
-            <label htmlFor="firstName" className="register-form__label">
-              First name
-            </label>
-            <input
-              id="firstName"
-              type="text"
-              name="firstName"
-              className="register-form__input"
-              placeholder="Enter your first name"
-            />
-          </div>
-
-          <div className="register-form__group">
-            <label htmlFor="lastName" className="register-form__label">
-              Last name
-            </label>
-            <input
-              id="lastName"
-              type="text"
-              name="lastName"
-              className="register-form__input"
-              placeholder="Enter your last name"
-            />
-          </div>
-        </div>
-
+      <form className="register-form" onSubmit={handleSubmit}>
         <div className="register-form__group">
-          <label htmlFor="email" className="register-form__label">
-            Email
-          </label>
+          <label className="register-form__label">Email</label>
           <input
-            id="email"
             type="email"
             name="email"
             className="register-form__input"
-            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
         <div className="register-form__group">
-          <label htmlFor="password" className="register-form__label">
-            Password
-          </label>
+          <label className="register-form__label">Password</label>
           <input
-            id="password"
             type="password"
             name="password"
             className="register-form__input"
-            placeholder="Create a password"
+            value={formData.password}
+            onChange={handleChange}
           />
         </div>
 
         <div className="register-form__group">
-          <label htmlFor="role" className="register-form__label">
-            Account type
-          </label>
+          <label className="register-form__label">I am a:</label>
           <select
-            id="role"
             name="role"
-            className="register-form__select"
-            defaultValue=""
+            className="register-form__input"
+            value={formData.role}
+            onChange={handleChange}
           >
-            <option value="" disabled>
-              Select your account type
-            </option>
-            <option value="client">Website owner</option>
-            <option value="expert">SEO expert</option>
+            <option value="client">Client</option>
+            <option value="expert">SEO Expert</option>
           </select>
         </div>
 
-        <div className="register-form__group">
-          <label htmlFor="bio" className="register-form__label">
-            Short description
-          </label>
-          <textarea
-            id="bio"
-            name="bio"
-            className="register-form__textarea"
-            placeholder="Tell us a little about your needs or expertise"
-          />
-        </div>
-
         <button type="submit" className="register-form__button">
-          Create Account
+          Register
         </button>
       </form>
 
+      {successMessage && <p className="register-page__success">{successMessage}</p>}
+      {errorMessage && <p className="register-page__error">{errorMessage}</p>}
+
       <p className="register-page__footer">
-        Already have an account? <Link to="/login">Sign in</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </section>
   );
