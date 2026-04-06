@@ -92,3 +92,9 @@
     color: #dc2626;
     text-align: center;
   }
+
+  @media (min-width: 1024px) {
+    .register-page {
+      max-width: 640px;
+    }
+  }

@@ -69,3 +69,9 @@
     color: #dc2626;
     text-align: center;
   }
+
+  @media (min-width: 768px) {
+    .login-page {
+      padding: 56px 0;
+    }
+  }

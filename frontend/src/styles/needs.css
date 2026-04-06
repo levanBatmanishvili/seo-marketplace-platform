@@ -38,6 +38,11 @@
   
   /* Tablet */
   @media (min-width: 768px) {
+    .needs {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
     .needs-list {
       grid-template-columns: 1fr 1fr;
     }
@@ -45,6 +50,10 @@
   
   /* Desktop */
   @media (min-width: 1024px) {
+    .needs {
+      max-width: 1200px;
+    }
+  
     .needs-list {
       grid-template-columns: 1fr 1fr 1fr;
     }

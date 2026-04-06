@@ -19,6 +19,7 @@
     color: white;
     border-radius: 6px;
     font-weight: 500;
+    transition: opacity 0.2s ease;
   }
   
   .home-hero__button:hover {
