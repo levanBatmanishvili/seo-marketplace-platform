@@ -18,20 +18,28 @@ export default function DashboardPage() {
       </p>
 
       <div className="dashboard__grid">
-      <Link to="/profile" className="dashboard__card">
-        My Profile
+        <Link to="/profile" className="dashboard__card">
+          My Profile
         </Link>
-      <Link to="/needs" className="dashboard__card">
-        My Needs
+
+        {user?.role === "client" && (
+          <Link to="/needs" className="dashboard__card">
+            My Needs
+          </Link>
+        )}
+
+        {user?.role === "expert" && (
+          <Link to="/browse-needs" className="dashboard__card">
+            Browse Needs
+          </Link>
+        )}
+
+        <Link to="/relations" className="dashboard__card">
+          My Relations
         </Link>
-      <Link to="/relations" className="dashboard__card">
-        My Relations
-        </Link>
-      <Link to="/messages" className="dashboard__card">
-        Messages
-        </Link>
-        <Link to="/browse-needs" className="dashboard__card">
-         Browse Needs
+
+        <Link to="/messages" className="dashboard__card">
+          Messages
         </Link>
       </div>
     </section>
