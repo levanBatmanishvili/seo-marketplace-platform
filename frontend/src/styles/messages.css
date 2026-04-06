@@ -1,0 +1,78 @@
+.messages-page {
+    padding: 20px 0;
+  }
+  
+  .messages-page__title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .messages-page__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .messages-page__input,
+  .messages-page__textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+  }
+  
+  .messages-page__textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .messages-page__button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .messages-page__button:hover {
+    opacity: 0.92;
+  }
+  
+  .messages-page__error {
+    margin-bottom: 16px;
+    color: #dc2626;
+  }
+  
+  .messages-page__empty {
+    color: #6b7280;
+  }
+  
+  .messages-page__list {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .messages-page__card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    background: #ffffff;
+  }
+  
+  .messages-page__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) {
+    .messages-page__controls {
+      flex-direction: row;
+      align-items: center;
+    }
+  }

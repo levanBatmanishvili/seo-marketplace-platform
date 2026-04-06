@@ -7,6 +7,7 @@ export default function MyNeedsPage() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    status: "open",
   });
 
   const [error, setError] = useState("");
@@ -41,6 +42,7 @@ export default function MyNeedsPage() {
       setFormData({
         title: "",
         description: "",
+        status: "open",
       });
     } catch (err) {
       setError(err.message);

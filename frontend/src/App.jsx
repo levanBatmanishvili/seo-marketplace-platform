@@ -10,6 +10,7 @@ import {
   MyProfilePage,
   MyNeedsPage,
   RelationsPage,
+  MessagesPage,
   NotFoundPage,
 } from "./pages";
 
@@ -57,6 +58,15 @@ export default function App() {
              <ProtectedRoute>
               <RelationsPage />
              </ProtectedRoute>
+           }
+         />
+
+         <Route
+           path="/messages"
+           element={
+              <ProtectedRoute>
+              <MessagesPage />
+              </ProtectedRoute>
            }
          />
       </Route>

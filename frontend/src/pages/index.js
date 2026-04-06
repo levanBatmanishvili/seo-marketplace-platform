@@ -6,3 +6,4 @@ export { default as DashboardPage } from "./DashboardPage";
 export { default as MyProfilePage } from "./MyProfilePage";
 export { default as MyNeedsPage } from "./MyNeedsPage";
 export { default as RelationsPage } from "./RelationsPage";
+export { default as MessagesPage } from "./MessagesPage";
