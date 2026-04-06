@@ -28,6 +28,10 @@
     padding: 20px;
     border-radius: 8px;
     background: #ffffff;
+    text-decoration: none;
+    color: #111827;
+    display: block;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
   }
   
   /* Tablet */
@@ -39,6 +43,11 @@
   
   /* Desktop */
   @media (min-width: 1024px) {
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
     .dashboard__grid {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }

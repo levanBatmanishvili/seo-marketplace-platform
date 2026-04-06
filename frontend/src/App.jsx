@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyProfilePage from "./pages/MyProfilePage";
+import MyNeedsPage from "./pages/MyNeedsPage";
 
 export default function App() {
   return (
@@ -21,6 +22,14 @@ export default function App() {
   element={
     <ProtectedRoute>
       <MyProfilePage />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/needs"
+  element={
+    <ProtectedRoute>
+      <MyNeedsPage />
     </ProtectedRoute>
   }
 />

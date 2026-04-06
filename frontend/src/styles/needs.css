@@ -1,0 +1,51 @@
+.needs {
+    padding: 20px;
+  }
+  
+  .needs-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .needs-form input,
+  .needs-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .needs-form button {
+    padding: 10px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+  
+  .needs-list {
+    display: grid;
+    gap: 12px;
+  }
+  
+  .need-card {
+    border: 1px solid #e5e7eb;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) {
+    .needs-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .needs-list {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
