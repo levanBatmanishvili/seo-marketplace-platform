@@ -49,15 +49,23 @@ export async function createRelation(req, res) {
 
 export async function getMyRelations(req, res) {
   try {
-    const relations = await Relation.findAll({
+    const sentRelations = await Relation.findAll({
       where: {
         requesterId: req.user.id,
       },
       order: [["createdAt", "DESC"]],
     });
 
+    const receivedRelations = await Relation.findAll({
+      where: {
+        receiverId: req.user.id,
+      },
+      order: [["createdAt", "DESC"]],
+    });
+
     return res.status(200).json({
-      relations,
+      sentRelations,
+      receivedRelations,
     });
   } catch (error) {
     console.error("Get relations error:", error);
