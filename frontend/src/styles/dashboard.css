@@ -1,5 +1,5 @@
 .dashboard {
-    padding: 20px;
+    padding: 20px 0;
   }
   
   .dashboard__title {
@@ -26,12 +26,19 @@
   .dashboard__card {
     border: 1px solid #e5e7eb;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #ffffff;
     text-decoration: none;
     color: #111827;
     display: block;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    font-weight: 500;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .dashboard__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-color: #2563eb;
   }
   
   /* Tablet */
@@ -43,11 +50,6 @@
   
   /* Desktop */
   @media (min-width: 1024px) {
-    .dashboard {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
     .dashboard__grid {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }

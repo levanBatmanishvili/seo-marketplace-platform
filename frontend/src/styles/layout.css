@@ -6,10 +6,25 @@
     padding: 20px 16px;
   }
   
+  /* Tablet */
   @media (min-width: 768px) {
     .site-main__container {
-      max-width: 1200px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 32px 20px;
     }
   }
+
+  /* Desktop */
+@media (min-width: 1024px) {
+  .site-main__container {
+    max-width: 1200px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .site-main__container {
+    max-width: 1320px;
+  }
+}

@@ -18,10 +18,18 @@ export default function DashboardPage() {
       </p>
 
       <div className="dashboard__grid">
-      <Link to="/profile" className="dashboard__card">My Profile</Link>
-      <Link to="/needs" className="dashboard__card">My Needs</Link>
-      <Link to="/relations" className="dashboard__card">My Relations</Link>
-      <Link to="/messages" className="dashboard__card">Messages</Link>
+      <Link to="/profile" className="dashboard__card">
+        My Profile
+        </Link>
+      <Link to="/needs" className="dashboard__card">
+        My Needs
+        </Link>
+      <Link to="/relations" className="dashboard__card">
+        My Relations
+        </Link>
+      <Link to="/messages" className="dashboard__card">
+        Messages
+        </Link>
       </div>
     </section>
   );
