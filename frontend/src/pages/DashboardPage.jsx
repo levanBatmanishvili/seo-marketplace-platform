@@ -30,6 +30,9 @@ export default function DashboardPage() {
       <Link to="/messages" className="dashboard__card">
         Messages
         </Link>
+        <Link to="/browse-needs" className="dashboard__card">
+         Browse Needs
+        </Link>
       </div>
     </section>
   );

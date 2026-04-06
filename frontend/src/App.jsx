@@ -12,6 +12,7 @@ import {
   RelationsPage,
   MessagesPage,
   NotFoundPage,
+  BrowseNeedsPage,
 } from "./pages";
 
 export default function App() {
@@ -67,6 +68,14 @@ export default function App() {
               <ProtectedRoute>
               <MessagesPage />
               </ProtectedRoute>
+           }
+         />
+          <Route
+            path="/browse-needs"
+            element={
+                <ProtectedRoute>
+                <BrowseNeedsPage />
+                </ProtectedRoute>
            }
          />
       </Route>
