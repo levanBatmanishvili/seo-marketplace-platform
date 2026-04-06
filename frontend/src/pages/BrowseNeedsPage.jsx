@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getOpenNeeds } from "../services/needService";
+import { createRelation } from "../services/relationService";
 import "../styles/browse-needs.css";
 
 export default function BrowseNeedsPage() {
   const [needs, setNeeds] = useState([]);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     async function fetchNeeds() {
@@ -19,11 +21,30 @@ export default function BrowseNeedsPage() {
     fetchNeeds();
   }, []);
 
+  async function handleSendRequest(need) {
+    setError("");
+    setSuccessMessage("");
+
+    try {
+      await createRelation({
+        receiverId: need.userId,
+        needId: need.id,
+        message: `Hello, I am interested in helping with: ${need.title}`,
+      });
+
+      setSuccessMessage("Relation request sent successfully.");
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+
   return (
     <section className="browse-needs">
       <h1 className="browse-needs__title">Browse Open Needs</h1>
 
       {error && <p className="browse-needs__error">{error}</p>}
+      {successMessage && <p className="browse-needs__success">{successMessage}</p>}
 
       <div className="browse-needs__list">
         {needs.length === 0 ? (
@@ -39,6 +60,14 @@ export default function BrowseNeedsPage() {
               <p className="browse-needs__card-owner">
                 <strong>User ID:</strong> {need.userId}
               </p>
+
+              <button
+                type="button"
+                className="browse-needs__button"
+                onClick={() => handleSendRequest(need)}
+              >
+                Send Request
+              </button>
             </article>
           ))
         )}

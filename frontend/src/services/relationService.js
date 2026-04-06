@@ -15,3 +15,10 @@ export function rejectRelation(relationId) {
     method: "PATCH",
   });
 }
+
+export function createRelation(relationData) {
+  return apiRequest("/relations", {
+    method: "POST",
+    body: JSON.stringify(relationData),
+  });
+}
