@@ -42,3 +42,22 @@ export async function getMyNeeds(req, res) {
     });
   }
 }
+
+export async function getOpenNeeds(req, res) {
+  try {
+    const needs = await Need.findAll({
+      where: { status: "open" },
+      order: [["createdAt", "DESC"]],
+    });
+
+    return res.status(200).json({
+      needs,
+    });
+  } catch (error) {
+    console.error("Get open needs error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
+}
