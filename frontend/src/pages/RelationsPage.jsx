@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   getMyRelations,
@@ -83,6 +84,15 @@ export default function RelationsPage() {
                 <p>
                   <strong>Message:</strong> {relation.message}
                 </p>
+
+                {relation.status === "accepted" && (
+                  <Link
+                    to={`/messages?relationId=${relation.id}`}
+                    className="relations__message-link"
+                  >
+                    Open Messages
+                  </Link>
+                )}
               </article>
             ))}
           </div>
@@ -110,6 +120,15 @@ export default function RelationsPage() {
                 <p>
                   <strong>Message:</strong> {relation.message}
                 </p>
+
+                {relation.status === "accepted" && (
+                  <Link
+                    to={`/messages?relationId=${relation.id}`}
+                    className="relations__message-link"
+                  >
+                    Open Messages
+                  </Link>
+                )}
 
                 {user?.role === "expert" && relation.status === "pending" && (
                   <div className="relations__actions">

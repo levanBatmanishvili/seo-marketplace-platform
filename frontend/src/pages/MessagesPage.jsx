@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   getMessagesByRelation,
   sendMessage,
@@ -6,10 +7,30 @@ import {
 import "../styles/messages.css";
 
 export default function MessagesPage() {
-  const [relationId, setRelationId] = useState("");
+  const [searchParams] = useSearchParams();
+  const [relationId, setRelationId] = useState(
+    searchParams.get("relationId") || ""
+  );
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
+  
+
+  useEffect(() => {
+    async function fetchMessages() {
+      if (!relationId) return;
+  
+      try {
+        const data = await getMessagesByRelation(relationId);
+        setMessages(data.messages || []);
+      } catch (err) {
+        setError(err.message);
+        setMessages([]);
+      }
+    }
+  
+    fetchMessages();
+  }, [relationId]);
 
   async function handleLoadMessages() {
     setError("");

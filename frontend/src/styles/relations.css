@@ -47,6 +47,14 @@
   .relations__card p {
     margin-bottom: 8px;
   }
+
+  .relations__message-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: underline;
+  }
   
   .relations__actions {
     display: flex;
