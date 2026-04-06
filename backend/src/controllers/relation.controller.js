@@ -12,6 +12,12 @@ export async function createRelation(req, res) {
       });
     }
 
+    if (receiverId !== need.userId) {
+      return res.status(400).json({
+        message: "Receiver must match the owner of the selected need.",
+      });
+    }
+
     const existingRelation = await Relation.findOne({
       where: {
         requesterId: req.user.id,
