@@ -8,18 +8,21 @@ import "../styles/messages.css";
 
 export default function MessagesPage() {
   const [searchParams] = useSearchParams();
+
   const [relationId, setRelationId] = useState(
     searchParams.get("relationId") || ""
   );
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-  
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     async function fetchMessages() {
       if (!relationId) return;
-  
+
+      setError("");
+
       try {
         const data = await getMessagesByRelation(relationId);
         setMessages(data.messages || []);
@@ -28,12 +31,13 @@ export default function MessagesPage() {
         setMessages([]);
       }
     }
-  
+
     fetchMessages();
   }, [relationId]);
 
   async function handleLoadMessages() {
     setError("");
+    setSuccessMessage("");
 
     try {
       const data = await getMessagesByRelation(relationId);
@@ -47,6 +51,7 @@ export default function MessagesPage() {
   async function handleSendMessage(event) {
     event.preventDefault();
     setError("");
+    setSuccessMessage("");
 
     try {
       const data = await sendMessage({
@@ -56,6 +61,7 @@ export default function MessagesPage() {
 
       setMessages((prev) => [...prev, data.messageData]);
       setContent("");
+      setSuccessMessage("Message sent successfully.");
     } catch (err) {
       setError(err.message);
     }
@@ -64,6 +70,12 @@ export default function MessagesPage() {
   return (
     <section className="messages-page">
       <h1 className="messages-page__title">Messages</h1>
+
+      <p className="messages-page__subtitle">
+        {relationId
+          ? `Conversation for relation #${relationId}`
+          : "Select a relation to load messages."}
+      </p>
 
       <div className="messages-page__controls">
         <input
@@ -84,17 +96,24 @@ export default function MessagesPage() {
       </div>
 
       {error && <p className="messages-page__error">{error}</p>}
+      {successMessage && (
+        <p className="messages-page__success">{successMessage}</p>
+      )}
 
       <div className="messages-page__list">
         {messages.length === 0 ? (
-          <p className="messages-page__empty">No messages found.</p>
+          <p className="messages-page__empty">
+            {relationId
+              ? "No messages yet. Start the conversation."
+              : "No relation selected."}
+          </p>
         ) : (
           messages.map((message) => (
             <article key={message.id} className="messages-page__card">
-              <p>
+              <p className="messages-page__meta">
                 <strong>Sender ID:</strong> {message.senderId}
               </p>
-              <p>{message.content}</p>
+              <p className="messages-page__content">{message.content}</p>
             </article>
           ))
         )}

@@ -6,6 +6,11 @@
     font-size: 1.6rem;
     margin-bottom: 20px;
   }
+
+  .messages-page__subtitle {
+    margin-bottom: 16px;
+    color: #6b7280;
+  }
   
   .messages-page__controls {
     display: flex;
@@ -45,6 +50,11 @@
     margin-bottom: 16px;
     color: #dc2626;
   }
+
+  .messages-page__success {
+    margin-bottom: 16px;
+    color: #15803d;
+  }
   
   .messages-page__empty {
     color: #6b7280;
@@ -61,6 +71,16 @@
     border-radius: 10px;
     padding: 16px;
     background: #ffffff;
+  }
+
+  .messages-page__meta {
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+  
+  .messages-page__content {
+    color: #111827;
   }
   
   .messages-page__form {
