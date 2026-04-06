@@ -9,14 +9,17 @@ import "../styles/relations.css";
 
 export default function RelationsPage() {
   const { user } = useAuth();
-  const [relations, setRelations] = useState([]);
+
+  const [sentRelations, setSentRelations] = useState([]);
+  const [receivedRelations, setReceivedRelations] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchRelations() {
       try {
         const data = await getMyRelations();
-        setRelations(data.relations);
+        setSentRelations(data.sentRelations || []);
+        setReceivedRelations(data.receivedRelations || []);
       } catch (err) {
         setError(err.message);
       }
@@ -29,7 +32,7 @@ export default function RelationsPage() {
     try {
       const data = await acceptRelation(relationId);
 
-      setRelations((prev) =>
+      setReceivedRelations((prev) =>
         prev.map((relation) =>
           relation.id === relationId ? data.relation : relation
         )
@@ -43,7 +46,7 @@ export default function RelationsPage() {
     try {
       const data = await rejectRelation(relationId);
 
-      setRelations((prev) =>
+      setReceivedRelations((prev) =>
         prev.map((relation) =>
           relation.id === relationId ? data.relation : relation
         )
@@ -59,46 +62,77 @@ export default function RelationsPage() {
 
       {error && <p className="relations__error">{error}</p>}
 
-      <div className="relations__list">
-        {relations.length === 0 ? (
-          <p className="relations__empty">No relations found.</p>
+      <div className="relations__section">
+        <h2 className="relations__subtitle">Sent Relations</h2>
+
+        {sentRelations.length === 0 ? (
+          <p className="relations__empty">No sent relations found.</p>
         ) : (
-          relations.map((relation) => (
-            <article key={relation.id} className="relations__card">
-              <p>
-                <strong>Relation ID:</strong> {relation.id}
-              </p>
-              <p>
-                <strong>Need ID:</strong> {relation.needId}
-              </p>
-              <p>
-                <strong>Status:</strong> {relation.status}
-              </p>
-              <p>
-                <strong>Message:</strong> {relation.message}
-              </p>
+          <div className="relations__list">
+            {sentRelations.map((relation) => (
+              <article key={relation.id} className="relations__card">
+                <p>
+                  <strong>Relation ID:</strong> {relation.id}
+                </p>
+                <p>
+                  <strong>Need ID:</strong> {relation.needId}
+                </p>
+                <p>
+                  <strong>Status:</strong> {relation.status}
+                </p>
+                <p>
+                  <strong>Message:</strong> {relation.message}
+                </p>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
 
-              {user?.role === "expert" && relation.status === "pending" && (
-                <div className="relations__actions">
-                  <button
-                    type="button"
-                    className="relations__button relations__button--accept"
-                    onClick={() => handleAccept(relation.id)}
-                  >
-                    Accept
-                  </button>
+      <div className="relations__section">
+        <h2 className="relations__subtitle">Received Relations</h2>
 
-                  <button
-                    type="button"
-                    className="relations__button relations__button--reject"
-                    onClick={() => handleReject(relation.id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              )}
-            </article>
-          ))
+        {receivedRelations.length === 0 ? (
+          <p className="relations__empty">No received relations found.</p>
+        ) : (
+          <div className="relations__list">
+            {receivedRelations.map((relation) => (
+              <article key={relation.id} className="relations__card">
+                <p>
+                  <strong>Relation ID:</strong> {relation.id}
+                </p>
+                <p>
+                  <strong>Need ID:</strong> {relation.needId}
+                </p>
+                <p>
+                  <strong>Status:</strong> {relation.status}
+                </p>
+                <p>
+                  <strong>Message:</strong> {relation.message}
+                </p>
+
+                {user?.role === "expert" && relation.status === "pending" && (
+                  <div className="relations__actions">
+                    <button
+                      type="button"
+                      className="relations__button relations__button--accept"
+                      onClick={() => handleAccept(relation.id)}
+                    >
+                      Accept
+                    </button>
+
+                    <button
+                      type="button"
+                      className="relations__button relations__button--reject"
+                      onClick={() => handleReject(relation.id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
         )}
       </div>
     </section>

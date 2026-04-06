@@ -6,6 +6,15 @@
     font-size: 1.6rem;
     margin-bottom: 20px;
   }
+
+  .relations__section {
+    margin-bottom: 32px;
+  }
+  
+  .relations__subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
   
   .relations__error {
     margin-bottom: 16px;
