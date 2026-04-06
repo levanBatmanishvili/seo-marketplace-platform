@@ -9,6 +9,7 @@ import {
   DashboardPage,
   MyProfilePage,
   MyNeedsPage,
+  RelationsPage,
   NotFoundPage,
 } from "./pages";
 
@@ -49,6 +50,15 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+           path="/relations"
+           element={
+             <ProtectedRoute>
+              <RelationsPage />
+             </ProtectedRoute>
+           }
+         />
       </Route>
 
       {/* 404 route */}

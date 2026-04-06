@@ -5,3 +5,4 @@ export { default as NotFoundPage } from "./NotFoundPage";
 export { default as DashboardPage } from "./DashboardPage";
 export { default as MyProfilePage } from "./MyProfilePage";
 export { default as MyNeedsPage } from "./MyNeedsPage";
+export { default as RelationsPage } from "./RelationsPage";

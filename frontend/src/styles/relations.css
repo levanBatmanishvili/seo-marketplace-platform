@@ -1,0 +1,83 @@
+.relations {
+    padding: 20px 0;
+  }
+  
+  .relations__title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .relations__error {
+    margin-bottom: 16px;
+    color: #dc2626;
+  }
+  
+  .relations__empty {
+    color: #6b7280;
+  }
+  
+  .relations__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .relations__card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    background: #ffffff;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  
+  .relations__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .relations__card p {
+    margin-bottom: 8px;
+  }
+  
+  .relations__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  
+  .relations__button {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  
+  .relations__button:hover {
+    opacity: 0.9;
+  }
+  
+  .relations__button--accept {
+    background-color: #15803d;
+  }
+  
+  .relations__button--reject {
+    background-color: #dc2626;
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) {
+    .relations__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .relations__list {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
