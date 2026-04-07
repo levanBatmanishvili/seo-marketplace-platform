@@ -1,0 +1,37 @@
+.browse-experts {
+    padding: 20px 0;
+  }
+  
+  .browse-experts__title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .browse-experts__error {
+    margin-bottom: 16px;
+    color: #dc2626;
+  }
+  
+  .browse-experts__empty {
+    color: #6b7280;
+  }
+  
+  .browse-experts__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .browse-experts__card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    background: #ffffff;
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) {
+    .browse-experts__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }

@@ -13,6 +13,7 @@ import {
   MessagesPage,
   NotFoundPage,
   BrowseNeedsPage,
+  BrowseExpertsPage,
 } from "./pages";
 
 export default function App() {
@@ -54,30 +55,39 @@ export default function App() {
         />
 
         <Route
-           path="/relations"
-           element={
-             <ProtectedRoute>
+          path="/relations"
+          element={
+            <ProtectedRoute>
               <RelationsPage />
-             </ProtectedRoute>
-           }
-         />
+            </ProtectedRoute>
+          }
+        />
 
-         <Route
-           path="/messages"
-           element={
-              <ProtectedRoute>
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
               <MessagesPage />
-              </ProtectedRoute>
-           }
-         />
-          <Route
-            path="/browse-needs"
-            element={
-                <ProtectedRoute>
-                <BrowseNeedsPage />
-                </ProtectedRoute>
-           }
-         />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/browse-needs"
+          element={
+            <ProtectedRoute>
+              <BrowseNeedsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/browse-experts"
+          element={
+            <ProtectedRoute>
+              <BrowseExpertsPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* 404 route */}

@@ -9,13 +9,9 @@ export default function DashboardPage() {
     <section className="dashboard">
       <h1 className="dashboard__title">Dashboard</h1>
 
-      <p className="dashboard__welcome">
-        Welcome {user?.email}
-      </p>
+      <p className="dashboard__welcome">Welcome {user?.email}</p>
 
-      <p className="dashboard__role">
-        Role: {user?.role}
-      </p>
+      <p className="dashboard__role">Role: {user?.role}</p>
 
       <div className="dashboard__grid">
         <Link to="/profile" className="dashboard__card">
@@ -31,6 +27,12 @@ export default function DashboardPage() {
         {user?.role === "expert" && (
           <Link to="/browse-needs" className="dashboard__card">
             Browse Needs
+          </Link>
+        )}
+
+        {user?.role === "client" && (
+          <Link to="/browse-experts" className="dashboard__card">
+            Browse Experts
           </Link>
         )}
 
