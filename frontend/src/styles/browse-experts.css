@@ -89,6 +89,21 @@
   opacity: 0.92;
 }
 
+.browse-experts__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.browse-experts__button--secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.browse-experts__button--secondary:hover {
+  opacity: 0.9;
+}
+
 /* Tablet */
 @media (min-width: 768px) {
   .browse-experts__list {

@@ -115,21 +115,23 @@ export default function BrowseExpertsPage() {
                   </a>
                 </p>
               )}
-              
-              <Link
-                to={`/experts/${expert.id}`}
-                className="browse-experts__link"
-              >
-                View Profile
-              </Link>
 
-              <button
-                type="button"
-                className="browse-experts__button"
-                onClick={() => handleSendRequest(expert)}
-              >
-                Send Request
-              </button>
+              <div className="browse-experts__actions">
+                <Link
+                  to={`/experts/${expert.id}`}
+                  className="browse-experts__button browse-experts__button--secondary"
+                >
+                  View Profile
+                </Link>
+
+                <button
+                  type="button"
+                  className="browse-experts__button"
+                  onClick={() => handleSendRequest(expert)}
+                >
+                  Send Request
+                </button>
+              </div>
             </article>
           ))
         )}
