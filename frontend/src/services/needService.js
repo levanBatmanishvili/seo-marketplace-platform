@@ -1,7 +1,7 @@
 import { apiRequest } from "./api";
 
 export function getMyNeeds() {
-  return apiRequest("/needs/my");
+  return apiRequest("/needs/me");
 }
 
 export function getOpenNeeds() {
