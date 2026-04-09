@@ -45,6 +45,14 @@
   background: #ffffff;
 }
 
+.browse-experts__link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 .browse-experts__button {
   margin-top: 12px;
   border: none;

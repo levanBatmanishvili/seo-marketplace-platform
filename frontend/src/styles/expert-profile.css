@@ -1,0 +1,39 @@
+.expert-profile-page {
+    padding: 20px 0;
+  }
+  
+  .expert-profile-page__title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .expert-profile-page__card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    background: #ffffff;
+  }
+  
+  .expert-profile-page__card p {
+    margin-bottom: 12px;
+  }
+  
+  .expert-profile-page__link {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  
+  .expert-profile-page__error {
+    color: #dc2626;
+  }
+  
+  .expert-profile-page__empty {
+    color: #6b7280;
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) {
+    .expert-profile-page__card {
+      max-width: 700px;
+    }
+  }

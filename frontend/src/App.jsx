@@ -14,6 +14,7 @@ import {
   NotFoundPage,
   BrowseNeedsPage,
   BrowseExpertsPage,
+  ExpertProfilePage,
 } from "./pages";
 
 export default function App() {
@@ -85,6 +86,15 @@ export default function App() {
           element={
             <ProtectedRoute>
               <BrowseExpertsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/experts/:id"
+          element={
+            <ProtectedRoute>
+              <ExpertProfilePage />
             </ProtectedRoute>
           }
         />

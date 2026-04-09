@@ -9,3 +9,4 @@ export { default as RelationsPage } from "./RelationsPage";
 export { default as MessagesPage } from "./MessagesPage";
 export { default as BrowseNeedsPage } from "./BrowseNeedsPage";
 export { default as BrowseExpertsPage } from "./BrowseExpertsPage";
+export { default as ExpertProfilePage } from "./ExpertProfilePage";

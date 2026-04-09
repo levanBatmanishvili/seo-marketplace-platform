@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createRelation } from "../services/relationService";
 import { getExperts } from "../services/userService";
@@ -85,6 +86,13 @@ export default function BrowseExpertsPage() {
               <p>
                 <strong>ID:</strong> {expert.id}
               </p>
+
+              <Link
+                to={`/experts/${expert.id}`}
+                className="browse-experts__link"
+              >
+                View Profile
+              </Link>
 
               <button
                 type="button"
