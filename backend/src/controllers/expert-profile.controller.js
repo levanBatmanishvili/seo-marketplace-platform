@@ -1,5 +1,5 @@
-import Profile from "../models/profile.model.js";
-import ExpertProfile from "../models/expert-profile.model.js";
+import { ExpertProfile, Profile } from "../models/index.js";
+
 
 export async function createExpertProfile(req, res) {
   try {
@@ -84,6 +84,39 @@ export async function getMyExpertProfile(req, res) {
     });
   } catch (error) {
     console.error("Get expert profile error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error.",
+    });
+  }
+}
+
+export async function getExpertProfileByUserId(req, res) {
+  try {
+    const { id } = req.params;
+
+    const profile = await Profile.findOne({
+      where: { userId: id },
+      include: [
+        {
+          model: ExpertProfile,
+          as: "expertProfile",
+        },
+      ],
+    });
+
+    if (!profile || !profile.expertProfile) {
+      return res.status(404).json({
+        message: "Expert profile not found.",
+      });
+    }
+
+    return res.status(200).json({
+      profile,
+      expertProfile: profile.expertProfile,
+    });
+  } catch (error) {
+    console.error("Get expert profile by user id error:", error);
 
     return res.status(500).json({
       message: "Internal server error.",
