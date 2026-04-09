@@ -78,8 +78,12 @@ export default function RelationsPage() {
                 <p>
                   <strong>Need ID:</strong> {relation.needId}
                 </p>
-                <p>
-                  <strong>Status:</strong> {relation.status}
+                <p className="relations__status">
+                  <span
+                    className={`relations__badge relations__badge--${relation.status}`}
+                  >
+                    {relation.status}
+                  </span>
                 </p>
                 <p>
                   <strong>Message:</strong> {relation.message}
@@ -114,8 +118,12 @@ export default function RelationsPage() {
                 <p>
                   <strong>Need ID:</strong> {relation.needId}
                 </p>
-                <p>
-                  <strong>Status:</strong> {relation.status}
+                <p className="relations__status">
+                  <span
+                    className={`relations__badge relations__badge--${relation.status}`}
+                  >
+                    {relation.status}
+                  </span>
                 </p>
                 <p>
                   <strong>Message:</strong> {relation.message}
