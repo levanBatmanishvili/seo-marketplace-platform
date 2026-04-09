@@ -45,6 +45,26 @@
   background: #ffffff;
 }
 
+.browse-experts__card-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.browse-experts__card-email {
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.browse-experts__card-meta {
+  margin-bottom: 8px;
+  color: #6b7280;
+}
+
+.browse-experts__external-link {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
 .browse-experts__link {
   display: inline-block;
   margin-top: 10px;

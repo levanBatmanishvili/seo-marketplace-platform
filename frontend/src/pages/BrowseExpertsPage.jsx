@@ -80,13 +80,42 @@ export default function BrowseExpertsPage() {
         ) : (
           experts.map((expert) => (
             <article key={expert.id} className="browse-experts__card">
-              <p>
+              <h2 className="browse-experts__card-title">
+                {expert.profile?.displayName || expert.email}
+              </h2>
+
+              <p className="browse-experts__card-email">
                 <strong>Email:</strong> {expert.email}
               </p>
-              <p>
-                <strong>ID:</strong> {expert.id}
+
+              <p className="browse-experts__card-description">
+                {expert.profile?.bio || "No bio available."}
               </p>
 
+              <p className="browse-experts__card-meta">
+                <strong>Experience:</strong>{" "}
+                {expert.profile?.expertProfile?.experienceLevel || "N/A"}
+              </p>
+
+              <p className="browse-experts__card-meta">
+                <strong>Specialties:</strong>{" "}
+                {expert.profile?.expertProfile?.specialties || "N/A"}
+              </p>
+
+              {expert.profile?.expertProfile?.portfolioUrl && (
+                <p className="browse-experts__card-meta">
+                  <strong>Portfolio:</strong>{" "}
+                  <a
+                    href={expert.profile.expertProfile.portfolioUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="browse-experts__external-link"
+                  >
+                    View portfolio
+                  </a>
+                </p>
+              )}
+              
               <Link
                 to={`/experts/${expert.id}`}
                 className="browse-experts__link"
