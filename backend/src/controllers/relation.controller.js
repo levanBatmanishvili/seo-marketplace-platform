@@ -1,39 +1,111 @@
-import { Relation, Need } from "../models/index.js";
+import { Relation, Need, User } from "../models/index.js";
 
+/**
+ * CREATE RELATION (bidirectional)
+ */
 export async function createRelation(req, res) {
   try {
     const { receiverId, needId, message } = req.validatedData;
 
-    const need = await Need.findByPk(needId);
+    const requesterId = req.user.id;
 
+    // ❌ Same user
+    if (requesterId === receiverId) {
+      return res.status(400).json({
+        message: "Requester and receiver cannot be the same user.",
+      });
+    }
+
+    // 🔍 Find need
+    const need = await Need.findByPk(needId);
     if (!need) {
       return res.status(404).json({
         message: "Need not found.",
       });
     }
 
-    if (receiverId !== need.userId) {
-      return res.status(400).json({
-        message: "Receiver must match the owner of the selected need.",
+    // 🔍 Find receiver
+    const receiver = await User.findByPk(receiverId);
+    if (!receiver) {
+      return res.status(404).json({
+        message: "Receiver not found.",
       });
     }
 
-    const existingRelation = await Relation.findOne({
-      where: {
-        requesterId: req.user.id,
-        receiverId,
-        needId,
-      },
+    const needOwnerId = need.userId;
+
+    const requesterIsNeedOwner = requesterId === needOwnerId;
+    const receiverIsNeedOwner = receiverId === needOwnerId;
+
+    /**
+     * 🔐 VALIDATION RULES
+     */
+
+    // RULE 1: One must be need owner
+    if (!requesterIsNeedOwner && !receiverIsNeedOwner) {
+      return res.status(400).json({
+        message: "One participant must be the owner of the selected need.",
+      });
+    }
+
+    // RULE 2: Cannot both be owner
+    if (requesterIsNeedOwner && receiverIsNeedOwner) {
+      return res.status(400).json({
+        message: "Need owner cannot create a relation with themselves.",
+      });
+    }
+
+    // RULE 3: Client → Expert
+    if (requesterIsNeedOwner) {
+      if (receiver.role !== "expert") {
+        return res.status(400).json({
+          message: "Clients can only send requests to experts.",
+        });
+      }
+    }
+
+    // RULE 4: Expert → Client
+    if (!requesterIsNeedOwner) {
+      if (req.user.role !== "expert") {
+        return res.status(400).json({
+          message: "Only experts can send requests for needs they do not own.",
+        });
+      }
+
+      if (!receiverIsNeedOwner) {
+        return res.status(400).json({
+          message: "Experts must send requests to the owner of the need.",
+        });
+      }
+    }
+
+    /**
+     * 🔁 DUPLICATE CHECK (bidirectional)
+     */
+    const existingRelations = await Relation.findAll({
+      where: { needId },
     });
 
-    if (existingRelation) {
+    const duplicateRelation = existingRelations.find(
+      (relation) =>
+        (relation.requesterId === requesterId &&
+          relation.receiverId === receiverId) ||
+        (relation.requesterId === receiverId &&
+          relation.receiverId === requesterId)
+    );
+
+    if (duplicateRelation) {
       return res.status(409).json({
-        message: "Relation request already exists.",
+        message:
+          "Relation request already exists for this need and participants.",
       });
     }
 
+    /**
+     * ✅ CREATE RELATION
+     */
     const relation = await Relation.create({
-      requesterId: req.user.id,
+      requesterId,
       receiverId,
       needId,
       message,
@@ -53,19 +125,18 @@ export async function createRelation(req, res) {
   }
 }
 
+/**
+ * GET MY RELATIONS
+ */
 export async function getMyRelations(req, res) {
   try {
     const sentRelations = await Relation.findAll({
-      where: {
-        requesterId: req.user.id,
-      },
+      where: { requesterId: req.user.id },
       order: [["createdAt", "DESC"]],
     });
 
     const receivedRelations = await Relation.findAll({
-      where: {
-        receiverId: req.user.id,
-      },
+      where: { receiverId: req.user.id },
       order: [["createdAt", "DESC"]],
     });
 
@@ -82,6 +153,9 @@ export async function getMyRelations(req, res) {
   }
 }
 
+/**
+ * ACCEPT RELATION
+ */
 export async function acceptRelation(req, res) {
   try {
     const { id } = req.params;
@@ -122,6 +196,9 @@ export async function acceptRelation(req, res) {
   }
 }
 
+/**
+ * REJECT RELATION
+ */
 export async function rejectRelation(req, res) {
   try {
     const { id } = req.params;
