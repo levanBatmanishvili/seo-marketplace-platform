@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createRelation } from "../services/relationService";
+import { createRelation, getMyRelations } from "../services/relationService";
 import { getExperts } from "../services/userService";
 import { getMyNeeds } from "../services/needService";
 import "../styles/browse-experts.css";
@@ -11,6 +11,7 @@ export default function BrowseExpertsPage() {
   const [selectedNeedId, setSelectedNeedId] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [sentRelations, setSentRelations] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,6 +21,9 @@ export default function BrowseExpertsPage() {
 
         const needsData = await getMyNeeds();
         setMyNeeds(needsData.needs || []);
+
+        const relationsData = await getMyRelations();
+      setSentRelations(relationsData.sentRelations || []);
       } catch (err) {
         setError(err.message);
       }
@@ -38,16 +42,27 @@ export default function BrowseExpertsPage() {
     }
 
     try {
-      await createRelation({
+      const data = await createRelation({
         receiverId: expert.id,
         needId: Number(selectedNeedId),
         message: "Hello, I would like to work with you on this project.",
       });
-
+      
+      setSentRelations((prev) => [...prev, data.relation]);
       setSuccessMessage("Relation request sent successfully.");
     } catch (err) {
       setError(err.message);
     }
+  }
+
+  function hasExistingRelation(expertId) {
+    if (!selectedNeedId) return false;
+  
+    return sentRelations.some(
+      (relation) =>
+        relation.receiverId === expertId &&
+        relation.needId === Number(selectedNeedId)
+    );
   }
 
   return (
@@ -128,8 +143,9 @@ export default function BrowseExpertsPage() {
                   type="button"
                   className="browse-experts__button"
                   onClick={() => handleSendRequest(expert)}
+                  disabled={hasExistingRelation(expert.id)}
                 >
-                  Send Request
+                   {hasExistingRelation(expert.id) ? "Request Sent" : "Send Request"}
                 </button>
               </div>
             </article>

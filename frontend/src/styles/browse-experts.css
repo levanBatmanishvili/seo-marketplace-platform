@@ -86,7 +86,9 @@
 }
 
 .browse-experts__button:hover {
-  opacity: 0.92;
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
 }
 
 .browse-experts__actions {
