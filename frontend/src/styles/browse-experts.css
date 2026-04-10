@@ -73,6 +73,12 @@
   font-weight: 500;
 }
 
+.browse-experts__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .browse-experts__button {
   margin-top: 12px;
   border: none;
@@ -91,13 +97,16 @@
   opacity: 1;
 }
 
-.browse-experts__actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
+.browse-experts__button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
 }
 
 .browse-experts__button--secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #e5e7eb;
   color: #111827;
 }
