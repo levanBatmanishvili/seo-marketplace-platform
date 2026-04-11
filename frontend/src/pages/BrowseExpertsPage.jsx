@@ -86,8 +86,8 @@ export default function BrowseExpertsPage() {
     const matchesExperience =
       experienceFilter === "all" || experience === experienceFilter;
 
-      const matchesNeed =
-    needFilter === "all" || specialties.includes(needFilter.toLowerCase());
+    const matchesNeed =
+      needFilter === "all" || specialties.includes(needFilter.toLowerCase());
 
     return matchesSearch && matchesExperience && matchesNeed;
   });
@@ -97,39 +97,39 @@ export default function BrowseExpertsPage() {
       <h1 className="browse-experts__title">Browse Experts</h1>
 
       <div className="browse-experts__filters">
-  {/* Search */}
-  <input
-    type="text"
-    placeholder="Search experts (name, email, specialty...)"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="browse-experts__input"
-  />
+        {/* Search */}
+        <input
+          type="text"
+          placeholder="Search experts (name, email, specialty...)"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="browse-experts__input"
+        />
 
-  {/* Experience Filter */}
-  <select
-    value={experienceFilter}
-    onChange={(e) => setExperienceFilter(e.target.value)}
-    className="browse-experts__select"
-  >
-    <option value="all">All experience</option>
-    <option value="junior">Junior</option>
-    <option value="mid">Mid</option>
-    <option value="senior">Senior</option>
-  </select>
+        {/* Experience Filter */}
+        <select
+          value={experienceFilter}
+          onChange={(e) => setExperienceFilter(e.target.value)}
+          className="browse-experts__select"
+        >
+          <option value="all">All experience</option>
+          <option value="junior">Junior</option>
+          <option value="mid">Mid</option>
+          <option value="senior">Senior</option>
+        </select>
 
-  {/* Needs Filter (NEU / optional) */}
-  <select
-    value={needFilter}
-    onChange={(e) => setNeedFilter(e.target.value)}
-    className="browse-experts__select"
-  >
-    <option value="all">All needs</option>
-    <option value="seo">SEO</option>
-    <option value="technical">Technical SEO</option>
-    <option value="performance">Performance</option>
-  </select>
-</div>
+        {/* Needs Filter (NEU / optional) */}
+        <select
+          value={needFilter}
+          onChange={(e) => setNeedFilter(e.target.value)}
+          className="browse-experts__select"
+        >
+          <option value="all">All needs</option>
+          <option value="seo">SEO</option>
+          <option value="technical">Technical SEO</option>
+          <option value="performance">Performance</option>
+        </select>
+      </div>
 
       {error && <p className="browse-experts__error">{error}</p>}
       {successMessage && (
@@ -153,7 +153,9 @@ export default function BrowseExpertsPage() {
 
       <div className="browse-experts__list">
         {filteredExperts.length === 0 ? (
-          <p className="browse-experts__empty">No experts match your current search or filter.</p>
+          <p className="browse-experts__empty">
+            No experts match your current search or filter.
+          </p>
         ) : (
           filteredExperts.map((expert) => (
             <article key={expert.id} className="browse-experts__card">

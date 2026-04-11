@@ -7,6 +7,8 @@ export default function BrowseNeedsPage() {
   const [needs, setNeeds] = useState([]);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     async function fetchNeeds() {
@@ -38,19 +40,56 @@ export default function BrowseNeedsPage() {
     }
   }
 
+  const filteredNeeds = needs.filter((need) => {
+    const title = need.title?.toLowerCase() || "";
+    const description = need.description?.toLowerCase() || "";
+    const status = need.status?.toLowerCase() || "";
+  
+    const matchesSearch =
+      title.includes(searchTerm.toLowerCase()) ||
+      description.includes(searchTerm.toLowerCase());
+  
+    const matchesStatus =
+      statusFilter === "all" || status === statusFilter;
+  
+    return matchesSearch && matchesStatus;
+  });
+
 
   return (
     <section className="browse-needs">
       <h1 className="browse-needs__title">Browse Open Needs</h1>
+      <div className="browse-needs__filters">
+  {/* Search */}
+  <input
+    type="text"
+    placeholder="Search needs (title, description...)"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="browse-needs__input"
+  />
+
+  {/* Status Filter */}
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+    className="browse-needs__select"
+  >
+    <option value="all">All needs</option>
+    <option value="open">Open</option>
+    <option value="in-progress">In progress</option>
+    <option value="closed">Closed</option>
+  </select>
+</div>
 
       {error && <p className="browse-needs__error">{error}</p>}
       {successMessage && <p className="browse-needs__success">{successMessage}</p>}
 
       <div className="browse-needs__list">
-        {needs.length === 0 ? (
-          <p className="browse-needs__empty">No open needs found.</p>
+        {filteredNeeds.length === 0 ? (
+          <p className="browse-needs__empty">No needs match your search or filters.</p>
         ) : (
-          needs.map((need) => (
+          filteredNeeds.map((need) => (
             <article key={need.id} className="browse-needs__card">
               <h2 className="browse-needs__card-title">{need.title}</h2>
               <p className="browse-needs__card-description">{need.description}</p>

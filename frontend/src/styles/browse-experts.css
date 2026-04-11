@@ -15,7 +15,7 @@
    Filters
 ========================= */
 
-.browse-experts__filters  {
+.browse-experts__filters {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -152,7 +152,6 @@
 .browse-experts__button--secondary:hover {
   opacity: 0.9;
 }
-
 
 /* =========================
    Tablet
