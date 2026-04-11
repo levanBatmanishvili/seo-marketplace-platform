@@ -6,55 +6,46 @@ import "../styles/messages.css";
 
 export default function MessagesPage() {
   const { user } = useAuth();
-
   const [searchParams] = useSearchParams();
 
   const [relationId, setRelationId] = useState(
     searchParams.get("relationId") || ""
   );
+  const [relation, setRelation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [relation, setRelation] = useState(null);
+
   const otherUser =
-    relation && user
-      ? relation.requester?.id === user.id
-        ? relation.receiver
-        : relation.requester
-      : null;
+    relation?.requester?.id === user?.id
+      ? relation?.receiver
+      : relation?.requester;
 
   useEffect(() => {
+    if (!relationId) return;
+
+    let intervalId;
     async function fetchMessages() {
-      if (!relationId) return;
-
-      setError("");
-
       try {
         const data = await getMessagesByRelation(relationId);
         setMessages(data.messages || []);
         setRelation(data.relation || null);
+        setError("");
       } catch (err) {
         setError(err.message);
         setMessages([]);
+        setRelation(null);
       }
     }
 
     fetchMessages();
+    intervalId = setInterval(() => {
+      fetchMessages();
+    }, 3000);
+
+    return () => clearInterval(intervalId);
   }, [relationId]);
-
-  async function handleLoadMessages() {
-    setError("");
-    setSuccessMessage("");
-
-    try {
-      const data = await getMessagesByRelation(relationId);
-      setMessages(data.messages || []);
-    } catch (err) {
-      setError(err.message);
-      setMessages([]);
-    }
-  }
 
   async function handleSendMessage(event) {
     event.preventDefault();
@@ -62,18 +53,17 @@ export default function MessagesPage() {
     setSuccessMessage("");
 
     try {
-      const data = await sendMessage({
+      await sendMessage({
         relationId: Number(relationId),
         content,
       });
 
       const refreshedData = await getMessagesByRelation(relationId);
-    setMessages(refreshedData.messages || []);
-    setRelation(refreshedData.relation || null);
+      setMessages(refreshedData.messages || []);
+      setRelation(refreshedData.relation || null);
 
-    setContent("");
-    setSuccessMessage("Message sent successfully.");
-    
+      setContent("");
+      setSuccessMessage("Message sent successfully.");
     } catch (err) {
       setError(err.message);
     }
@@ -83,13 +73,15 @@ export default function MessagesPage() {
     <section className="messages-page">
       <h1 className="messages-page__title">Messages</h1>
 
-      <h2 className="messages-page__subtitle">
+      <p className="messages-page__subtitle">
         {otherUser
           ? `Conversation with ${
               otherUser.profile?.displayName || otherUser.email
             }`
-          : "Loading conversation..."}
-      </h2>
+          : relationId
+          ? "Loading conversation..."
+          : "Select a relation to load messages."}
+      </p>
 
       <div className="messages-page__controls">
         <input
@@ -99,14 +91,6 @@ export default function MessagesPage() {
           onChange={(e) => setRelationId(e.target.value)}
           className="messages-page__input"
         />
-
-        <button
-          type="button"
-          onClick={handleLoadMessages}
-          className="messages-page__button"
-        >
-          Load Messages
-        </button>
       </div>
 
       {error && <p className="messages-page__error">{error}</p>}
