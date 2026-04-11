@@ -14,6 +14,7 @@ export default function RelationsPage() {
   const [sentRelations, setSentRelations] = useState([]);
   const [receivedRelations, setReceivedRelations] = useState([]);
   const [error, setError] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     async function fetchRelations() {
@@ -57,20 +58,72 @@ export default function RelationsPage() {
     }
   }
 
+  function filterRelations(relations) {
+    if (statusFilter === "all") {
+      return relations;
+    }
+  
+    return relations.filter((relation) => relation.status === statusFilter);
+  }
+
+  const filteredSentRelations = filterRelations(sentRelations);
+  const filteredReceivedRelations = filterRelations(receivedRelations);
+
   return (
     <section className="relations">
       <h1 className="relations__title">My Relations</h1>
+      <div className="relations__filters">
+  <button
+    type="button"
+    className={`relations__filter-button ${
+      statusFilter === "all" ? "relations__filter-button--active" : ""
+    }`}
+    onClick={() => setStatusFilter("all")}
+  >
+    All
+  </button>
+
+  <button
+    type="button"
+    className={`relations__filter-button ${
+      statusFilter === "pending" ? "relations__filter-button--active" : ""
+    }`}
+    onClick={() => setStatusFilter("pending")}
+  >
+    Pending
+  </button>
+
+  <button
+    type="button"
+    className={`relations__filter-button ${
+      statusFilter === "accepted" ? "relations__filter-button--active" : ""
+    }`}
+    onClick={() => setStatusFilter("accepted")}
+  >
+    Accepted
+  </button>
+
+  <button
+    type="button"
+    className={`relations__filter-button ${
+      statusFilter === "rejected" ? "relations__filter-button--active" : ""
+    }`}
+    onClick={() => setStatusFilter("rejected")}
+  >
+    Rejected
+  </button>
+</div>
 
       {error && <p className="relations__error">{error}</p>}
 
       <div className="relations__section">
         <h2 className="relations__subtitle">Sent Relations</h2>
 
-        {sentRelations.length === 0 ? (
+        {filteredSentRelations.length === 0 ? (
           <p className="relations__empty">No sent relations found.</p>
         ) : (
           <div className="relations__list">
-            {sentRelations.map((relation) => (
+            {filteredSentRelations.map((relation) => (
               <article key={relation.id} className="relations__card">
                 <p>
                   <strong>Relation ID:</strong> {relation.id}
@@ -106,11 +159,11 @@ export default function RelationsPage() {
       <div className="relations__section">
         <h2 className="relations__subtitle">Received Relations</h2>
 
-        {receivedRelations.length === 0 ? (
+        {filteredReceivedRelations.length === 0 ? (
           <p className="relations__empty">No received relations found.</p>
         ) : (
           <div className="relations__list">
-            {receivedRelations.map((relation) => (
+            {filteredReceivedRelations.map((relation) => (
               <article key={relation.id} className="relations__card">
                 <p>
                   <strong>Relation ID:</strong> {relation.id}

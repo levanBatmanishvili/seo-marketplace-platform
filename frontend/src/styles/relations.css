@@ -7,6 +7,33 @@
     margin-bottom: 20px;
   }
 
+  .relations__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  
+  .relations__filter-button {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .relations__filter-button:hover {
+    border-color: #2563eb;
+  }
+  
+  .relations__filter-button--active {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+  }
+
   .relations__section {
     margin-bottom: 32px;
   }
