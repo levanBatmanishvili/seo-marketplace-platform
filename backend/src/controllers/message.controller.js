@@ -1,4 +1,4 @@
-import { Message, Relation, User } from "../models/index.js";
+import { Message, User, Relation } from "../models/index.js";
 
 export async function sendMessage(req, res) {
   try {
@@ -50,7 +50,20 @@ export async function getMessages(req, res) {
   try {
     const { relationId } = req.params;
 
-    const relation = await Relation.findByPk(relationId);
+    const relation = await Relation.findByPk(relationId, {
+      include: [
+        {
+          model: User,
+          as: "requester",
+          attributes: ["id", "email"],
+        },
+        {
+          model: User,
+          as: "receiver",
+          attributes: ["id", "email"],
+        },
+      ],
+    });
 
     if (!relation) {
       return res.status(404).json({
@@ -81,6 +94,7 @@ export async function getMessages(req, res) {
 
     return res.status(200).json({
       messages,
+      relation,
     });
   } catch (error) {
     console.error("Get messages error:", error);

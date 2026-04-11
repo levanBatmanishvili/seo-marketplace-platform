@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import {
-  getMessagesByRelation,
-  sendMessage,
-} from "../services/messageService";
+import { getMessagesByRelation, sendMessage } from "../services/messageService";
 import "../styles/messages.css";
 
 export default function MessagesPage() {
   const { user } = useAuth();
+
   const [searchParams] = useSearchParams();
 
   const [relationId, setRelationId] = useState(
@@ -18,6 +16,13 @@ export default function MessagesPage() {
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [relation, setRelation] = useState(null);
+  const otherUser =
+    relation && user
+      ? relation.requester?.id === user.id
+        ? relation.receiver
+        : relation.requester
+      : null;
 
   useEffect(() => {
     async function fetchMessages() {
@@ -28,6 +33,7 @@ export default function MessagesPage() {
       try {
         const data = await getMessagesByRelation(relationId);
         setMessages(data.messages || []);
+        setRelation(data.relation || null);
       } catch (err) {
         setError(err.message);
         setMessages([]);
@@ -74,8 +80,10 @@ export default function MessagesPage() {
       <h1 className="messages-page__title">Messages</h1>
 
       <h2 className="messages-page__subtitle">
-        {relationId
-          ? `Conversation for relation #${relationId}`
+        {otherUser
+          ? `Conversation with ${otherUser.email}`
+          : relationId
+          ? "Loading conversation..."
           : "Select a relation to load messages."}
       </h2>
 
@@ -105,25 +113,27 @@ export default function MessagesPage() {
       <div className="messages-page__list">
         {messages.length === 0 ? (
           <div className="messages-page__empty-state">
-          <p className="messages-page__empty">
-            {relationId
-              ? "No messages yet. Start the conversation."
-              : "No relation selected."}
-          </p>
-      
-          {relationId && (
-            <p className="messages-page__hint">
-              Send the first message to begin the discussion.
+            <p className="messages-page__empty">
+              {relationId
+                ? "No messages yet. Start the conversation."
+                : "No relation selected."}
             </p>
-          )}
-        </div>
+
+            {relationId && (
+              <p className="messages-page__hint">
+                Send the first message to begin the discussion.
+              </p>
+            )}
+          </div>
         ) : (
           messages.map((message) => (
             <article key={message.id} className="messages-page__card">
               <p className="messages-page__meta">
                 <strong>
-                {message.senderId === user?.id ? "You" : message.sender?.email || "Unknown user"}
-                  </strong> 
+                  {message.senderId === user?.id
+                    ? "You"
+                    : message.sender?.email || "Unknown user"}
+                </strong>
               </p>
               <p className="messages-page__content">{message.content}</p>
             </article>
