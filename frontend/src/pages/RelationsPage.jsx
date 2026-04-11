@@ -171,7 +171,7 @@ export default function RelationsPage() {
         <h2 className="relations__subtitle">Received Relations</h2>
 
         {filteredReceivedRelations.length === 0 ? (
-          <p className="relations__empty">No received relations found.</p>
+          <p className="relations__empty"> No sent relations yet.</p>
         ) : (
           <div className="relations__list">
             {filteredReceivedRelations.map((relation) => (

@@ -102,11 +102,19 @@ export default function MessagesPage() {
 
       <div className="messages-page__list">
         {messages.length === 0 ? (
+          <div className="messages-page__empty-state">
           <p className="messages-page__empty">
             {relationId
               ? "No messages yet. Start the conversation."
               : "No relation selected."}
           </p>
+      
+          {relationId && (
+            <p className="messages-page__hint">
+              Send the first message to begin the discussion.
+            </p>
+          )}
+        </div>
         ) : (
           messages.map((message) => (
             <article key={message.id} className="messages-page__card">

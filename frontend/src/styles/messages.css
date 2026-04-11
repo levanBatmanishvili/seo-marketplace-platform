@@ -59,6 +59,16 @@
   .messages-page__empty {
     color: #6b7280;
   }
+
+  .messages-page__empty-state {
+    margin-bottom: 24px;
+  }
+  
+  .messages-page__hint {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
   
   .messages-page__list {
     display: grid;

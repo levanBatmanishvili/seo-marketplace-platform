@@ -16,6 +16,11 @@
     color: #6b7280;
     margin-bottom: 20px;
   }
+
+  .dashboard__intro {
+    color: #4b5563;
+    margin-bottom: 24px;
+  }
   
   .dashboard__grid {
     display: grid;
@@ -33,6 +38,17 @@
     display: block;
     font-weight: 500;
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .dashboard__card-title {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  
+  .dashboard__card-text {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .dashboard__card:hover {
