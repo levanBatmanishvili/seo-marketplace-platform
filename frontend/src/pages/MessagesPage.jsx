@@ -80,11 +80,11 @@ export default function MessagesPage() {
       <h1 className="messages-page__title">Messages</h1>
 
       <h2 className="messages-page__subtitle">
-        {otherUser
-          ? `Conversation with ${otherUser.email}`
-          : relationId
-          ? "Loading conversation..."
-          : "Select a relation to load messages."}
+      {otherUser
+    ? `Conversation with ${
+        otherUser.profile?.displayName || otherUser.email
+      }`
+    : "Loading conversation..."}
       </h2>
 
       <div className="messages-page__controls">

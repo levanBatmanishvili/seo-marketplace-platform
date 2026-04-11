@@ -1,4 +1,4 @@
-import { Message, User, Relation } from "../models/index.js";
+import { Message, User, Relation, Profile } from "../models/index.js";
 
 export async function sendMessage(req, res) {
   try {
@@ -56,11 +56,25 @@ export async function getMessages(req, res) {
           model: User,
           as: "requester",
           attributes: ["id", "email"],
+          include: [
+            {
+              model: Profile,
+              as: "profile",
+              attributes: ["displayName"],
+            },
+          ],
         },
         {
           model: User,
           as: "receiver",
           attributes: ["id", "email"],
+          include: [
+            {
+              model: Profile,
+              as: "profile",
+              attributes: ["displayName"],
+            },
+          ],
         },
       ],
     });
