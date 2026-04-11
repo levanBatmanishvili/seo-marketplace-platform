@@ -67,9 +67,13 @@ export default function MessagesPage() {
         content,
       });
 
-      setMessages((prev) => [...prev, data.messageData]);
-      setContent("");
-      setSuccessMessage("Message sent successfully.");
+      const refreshedData = await getMessagesByRelation(relationId);
+    setMessages(refreshedData.messages || []);
+    setRelation(refreshedData.relation || null);
+
+    setContent("");
+    setSuccessMessage("Message sent successfully.");
+    
     } catch (err) {
       setError(err.message);
     }
@@ -80,11 +84,11 @@ export default function MessagesPage() {
       <h1 className="messages-page__title">Messages</h1>
 
       <h2 className="messages-page__subtitle">
-      {otherUser
-    ? `Conversation with ${
-        otherUser.profile?.displayName || otherUser.email
-      }`
-    : "Loading conversation..."}
+        {otherUser
+          ? `Conversation with ${
+              otherUser.profile?.displayName || otherUser.email
+            }`
+          : "Loading conversation..."}
       </h2>
 
       <div className="messages-page__controls">
@@ -130,9 +134,9 @@ export default function MessagesPage() {
             <article key={message.id} className="messages-page__card">
               <p className="messages-page__meta">
                 <strong>
-                  {message.senderId === user?.id
-                    ? "You"
-                    : message.sender?.email || "Unknown user"}
+                  {message.sender?.profile?.displayName ||
+                    message.sender?.email ||
+                    "Unknown user"}
                 </strong>
               </p>
               <p className="messages-page__content">{message.content}</p>
