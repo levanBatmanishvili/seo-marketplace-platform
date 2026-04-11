@@ -1,4 +1,4 @@
-import Need from "../models/need.model.js";
+import { Need, User } from "../models/index.js";
 
 export async function createNeed(req, res) {
   try {

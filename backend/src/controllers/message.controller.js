@@ -1,4 +1,4 @@
-import { Message, Relation } from "../models/index.js";
+import { Message, Relation, User } from "../models/index.js";
 
 export async function sendMessage(req, res) {
   try {
