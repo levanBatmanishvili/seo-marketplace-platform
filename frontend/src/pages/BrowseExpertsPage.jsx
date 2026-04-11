@@ -12,6 +12,8 @@ export default function BrowseExpertsPage() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [sentRelations, setSentRelations] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [experienceFilter, setExperienceFilter] = useState("all");
 
   useEffect(() => {
     async function fetchData() {
@@ -23,7 +25,7 @@ export default function BrowseExpertsPage() {
         setMyNeeds(needsData.needs || []);
 
         const relationsData = await getMyRelations();
-      setSentRelations(relationsData.sentRelations || []);
+        setSentRelations(relationsData.sentRelations || []);
       } catch (err) {
         setError(err.message);
       }
@@ -47,7 +49,7 @@ export default function BrowseExpertsPage() {
         needId: Number(selectedNeedId),
         message: "Hello, I would like to work with you on this project.",
       });
-      
+
       setSentRelations((prev) => [...prev, data.relation]);
       setSuccessMessage("Relation request sent successfully.");
     } catch (err) {
@@ -57,7 +59,7 @@ export default function BrowseExpertsPage() {
 
   function hasExistingRelation(expertId) {
     if (!selectedNeedId) return false;
-  
+
     return sentRelations.some(
       (relation) =>
         relation.receiverId === expertId &&
@@ -65,9 +67,51 @@ export default function BrowseExpertsPage() {
     );
   }
 
+  const filteredExperts = experts.filter((expert) => {
+    const displayName = expert.profile?.displayName?.toLowerCase() || "";
+    const email = expert.email?.toLowerCase() || "";
+    const bio = expert.profile?.bio?.toLowerCase() || "";
+    const specialties =
+      expert.profile?.expertProfile?.specialties?.toLowerCase() || "";
+    const experience =
+      expert.profile?.expertProfile?.experienceLevel?.toLowerCase() || "";
+
+    const matchesSearch =
+      displayName.includes(searchTerm.toLowerCase()) ||
+      email.includes(searchTerm.toLowerCase()) ||
+      bio.includes(searchTerm.toLowerCase()) ||
+      specialties.includes(searchTerm.toLowerCase());
+
+    const matchesExperience =
+      experienceFilter === "all" || experience === experienceFilter;
+
+    return matchesSearch && matchesExperience;
+  });
+
   return (
     <section className="browse-experts">
       <h1 className="browse-experts__title">Browse Experts</h1>
+
+      <div className="browse-experts__filters">
+        <input
+          type="text"
+          placeholder="Search by name, email, bio or specialty"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="browse-experts__input"
+        />
+
+        <select
+          value={experienceFilter}
+          onChange={(e) => setExperienceFilter(e.target.value)}
+          className="browse-experts__select"
+        >
+          <option value="all">All experience levels</option>
+          <option value="junior">Junior</option>
+          <option value="mid">Mid</option>
+          <option value="senior">Senior</option>
+        </select>
+      </div>
 
       {error && <p className="browse-experts__error">{error}</p>}
       {successMessage && (
@@ -90,10 +134,10 @@ export default function BrowseExpertsPage() {
       </div>
 
       <div className="browse-experts__list">
-        {experts.length === 0 ? (
-          <p className="browse-experts__empty">No experts found.</p>
+        {filteredExperts.length === 0 ? (
+          <p className="browse-experts__empty">No experts match your current search or filter.</p>
         ) : (
-          experts.map((expert) => (
+          filteredExperts.map((expert) => (
             <article key={expert.id} className="browse-experts__card">
               <h2 className="browse-experts__card-title">
                 {expert.profile?.displayName || expert.email}
@@ -145,7 +189,9 @@ export default function BrowseExpertsPage() {
                   onClick={() => handleSendRequest(expert)}
                   disabled={hasExistingRelation(expert.id)}
                 >
-                   {hasExistingRelation(expert.id) ? "Request Sent" : "Send Request"}
+                  {hasExistingRelation(expert.id)
+                    ? "Request Sent"
+                    : "Send Request"}
                 </button>
               </div>
             </article>
