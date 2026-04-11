@@ -14,6 +14,7 @@ export default function BrowseExpertsPage() {
   const [sentRelations, setSentRelations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [experienceFilter, setExperienceFilter] = useState("all");
+  const [needFilter, setNeedFilter] = useState("all");
 
   useEffect(() => {
     async function fetchData() {
@@ -85,7 +86,10 @@ export default function BrowseExpertsPage() {
     const matchesExperience =
       experienceFilter === "all" || experience === experienceFilter;
 
-    return matchesSearch && matchesExperience;
+      const matchesNeed =
+    needFilter === "all" || specialties.includes(needFilter.toLowerCase());
+
+    return matchesSearch && matchesExperience && matchesNeed;
   });
 
   return (
@@ -93,25 +97,39 @@ export default function BrowseExpertsPage() {
       <h1 className="browse-experts__title">Browse Experts</h1>
 
       <div className="browse-experts__filters">
-        <input
-          type="text"
-          placeholder="Search by name, email, bio or specialty"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="browse-experts__input"
-        />
+  {/* Search */}
+  <input
+    type="text"
+    placeholder="Search experts (name, email, specialty...)"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="browse-experts__input"
+  />
 
-        <select
-          value={experienceFilter}
-          onChange={(e) => setExperienceFilter(e.target.value)}
-          className="browse-experts__select"
-        >
-          <option value="all">All experience levels</option>
-          <option value="junior">Junior</option>
-          <option value="mid">Mid</option>
-          <option value="senior">Senior</option>
-        </select>
-      </div>
+  {/* Experience Filter */}
+  <select
+    value={experienceFilter}
+    onChange={(e) => setExperienceFilter(e.target.value)}
+    className="browse-experts__select"
+  >
+    <option value="all">All experience</option>
+    <option value="junior">Junior</option>
+    <option value="mid">Mid</option>
+    <option value="senior">Senior</option>
+  </select>
+
+  {/* Needs Filter (NEU / optional) */}
+  <select
+    value={needFilter}
+    onChange={(e) => setNeedFilter(e.target.value)}
+    className="browse-experts__select"
+  >
+    <option value="all">All needs</option>
+    <option value="seo">SEO</option>
+    <option value="technical">Technical SEO</option>
+    <option value="performance">Performance</option>
+  </select>
+</div>
 
       {error && <p className="browse-experts__error">{error}</p>}
       {successMessage && (

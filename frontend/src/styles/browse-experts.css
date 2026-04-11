@@ -15,7 +15,7 @@
    Filters
 ========================= */
 
-.browse-experts__filters {
+.browse-experts__filters  {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -29,6 +29,11 @@
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.browse-experts__input {
+  grid-column: 1 / -1;
 }
 
 .browse-experts__input::placeholder {
@@ -63,20 +68,6 @@
   gap: 16px;
 }
 
-/* Tablet */
-@media (min-width: 768px) {
-  .browse-experts__list {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .browse-experts__list {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 /* =========================
    Card
 ========================= */
@@ -102,6 +93,11 @@
 .browse-experts__card-email {
   margin-bottom: 8px;
   color: #374151;
+}
+
+.browse-experts__card-description {
+  margin-bottom: 8px;
+  color: #4b5563;
 }
 
 .browse-experts__card-meta {
@@ -157,14 +153,14 @@
   opacity: 0.9;
 }
 
+
 /* =========================
-   Filters Responsive
+   Tablet
 ========================= */
 
 @media (min-width: 768px) {
   .browse-experts__filters {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
 
@@ -173,7 +169,15 @@
     padding: 12px 14px;
     font-size: 1rem;
   }
+
+  .browse-experts__list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
+
+/* =========================
+   Desktop
+========================= */
 
 @media (min-width: 1024px) {
   .browse-experts__filters {
@@ -181,6 +185,10 @@
   }
 
   .browse-experts__select {
-    max-width: 260px;
+    max-width: 100%;
+  }
+
+  .browse-experts__list {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
