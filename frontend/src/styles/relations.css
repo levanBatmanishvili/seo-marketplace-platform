@@ -66,8 +66,21 @@
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
 
-  .relations__status {
-    margin-bottom: 8px;
+  .relation-status {
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .relation-status--pending {
+    color: #ca8a04;
+  }
+  
+  .relation-status--accepted {
+    color: #15803d;
+  }
+  
+  .relation-status--rejected {
+    color: #dc2626;
   }
   
   .relations__badge {

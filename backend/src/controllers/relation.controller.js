@@ -132,11 +132,19 @@ export async function getMyRelations(req, res) {
   try {
     const sentRelations = await Relation.findAll({
       where: { requesterId: req.user.id },
+      include: [
+        { model: Need, as: "need", attributes: ["id", "title"] },
+        { model: User, as: "receiver", attributes: ["id", "email"] },
+      ],
       order: [["createdAt", "DESC"]],
     });
 
     const receivedRelations = await Relation.findAll({
       where: { receiverId: req.user.id },
+      include: [
+        { model: Need, as: "need", attributes: ["id", "title"] },
+        { model: User, as: "requester", attributes: ["id", "email"] },
+      ],
       order: [["createdAt", "DESC"]],
     });
 

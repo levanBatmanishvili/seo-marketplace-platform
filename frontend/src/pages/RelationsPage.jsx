@@ -62,7 +62,7 @@ export default function RelationsPage() {
     if (statusFilter === "all") {
       return relations;
     }
-  
+
     return relations.filter((relation) => relation.status === statusFilter);
   }
 
@@ -73,46 +73,50 @@ export default function RelationsPage() {
     <section className="relations">
       <h1 className="relations__title">My Relations</h1>
       <div className="relations__filters">
-  <button
-    type="button"
-    className={`relations__filter-button ${
-      statusFilter === "all" ? "relations__filter-button--active" : ""
-    }`}
-    onClick={() => setStatusFilter("all")}
-  >
-    All
-  </button>
+        <button
+          type="button"
+          className={`relations__filter-button ${
+            statusFilter === "all" ? "relations__filter-button--active" : ""
+          }`}
+          onClick={() => setStatusFilter("all")}
+        >
+          All
+        </button>
 
-  <button
-    type="button"
-    className={`relations__filter-button ${
-      statusFilter === "pending" ? "relations__filter-button--active" : ""
-    }`}
-    onClick={() => setStatusFilter("pending")}
-  >
-    Pending
-  </button>
+        <button
+          type="button"
+          className={`relations__filter-button ${
+            statusFilter === "pending" ? "relations__filter-button--active" : ""
+          }`}
+          onClick={() => setStatusFilter("pending")}
+        >
+          Pending
+        </button>
 
-  <button
-    type="button"
-    className={`relations__filter-button ${
-      statusFilter === "accepted" ? "relations__filter-button--active" : ""
-    }`}
-    onClick={() => setStatusFilter("accepted")}
-  >
-    Accepted
-  </button>
+        <button
+          type="button"
+          className={`relations__filter-button ${
+            statusFilter === "accepted"
+              ? "relations__filter-button--active"
+              : ""
+          }`}
+          onClick={() => setStatusFilter("accepted")}
+        >
+          Accepted
+        </button>
 
-  <button
-    type="button"
-    className={`relations__filter-button ${
-      statusFilter === "rejected" ? "relations__filter-button--active" : ""
-    }`}
-    onClick={() => setStatusFilter("rejected")}
-  >
-    Rejected
-  </button>
-</div>
+        <button
+          type="button"
+          className={`relations__filter-button ${
+            statusFilter === "rejected"
+              ? "relations__filter-button--active"
+              : ""
+          }`}
+          onClick={() => setStatusFilter("rejected")}
+        >
+          Rejected
+        </button>
+      </div>
 
       {error && <p className="relations__error">{error}</p>}
 
@@ -126,16 +130,23 @@ export default function RelationsPage() {
             {filteredSentRelations.map((relation) => (
               <article key={relation.id} className="relations__card">
                 <p>
-                  <strong>Relation ID:</strong> {relation.id}
+                  <strong>Project:</strong>{" "}
+                  {relation.need?.title || "Unknown project"}
                 </p>
+
                 <p>
-                  <strong>Need ID:</strong> {relation.needId}
+                  <strong>
+                    {user?.role === "expert" ? "Client" : "Expert"}:
+                  </strong>{" "}
+                  {relation.receiver?.email ||
+                    relation.requester?.email ||
+                    "Unknown user"}
                 </p>
                 <p className="relations__status">
                   <span
                     className={`relations__badge relations__badge--${relation.status}`}
                   >
-                    {relation.status}
+                    {relation.status.charAt(0).toUpperCase() + relation.status.slice(1)}
                   </span>
                 </p>
                 <p>
@@ -166,18 +177,28 @@ export default function RelationsPage() {
             {filteredReceivedRelations.map((relation) => (
               <article key={relation.id} className="relations__card">
                 <p>
-                  <strong>Relation ID:</strong> {relation.id}
+                  <strong>Project:</strong>{" "}
+                  {relation.need?.title || relation.Need?.title || "Unknown project"}
                 </p>
+
                 <p>
-                  <strong>Need ID:</strong> {relation.needId}
+                  <strong>
+                    {user?.role === "expert" ? "Client" : "Expert"}:
+                  </strong>{" "}
+                  {relation.requester?.email ||
+                    relation.receiver?.email ||
+                    "Unknown user"}
                 </p>
+
                 <p className="relations__status">
                   <span
                     className={`relations__badge relations__badge--${relation.status}`}
                   >
-                    {relation.status}
+                    {relation.status.charAt(0).toUpperCase() +
+                      relation.status.slice(1)}
                   </span>
                 </p>
+
                 <p>
                   <strong>Message:</strong> {relation.message}
                 </p>
