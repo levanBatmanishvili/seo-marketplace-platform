@@ -97,7 +97,7 @@ const [statusFilter, setStatusFilter] = useState("all");
                 <strong>Status:</strong> {need.status}
               </p>
               <p className="browse-needs__card-owner">
-                <strong>User ID:</strong> {need.userId}
+              <strong>Client:</strong> {need.user?.email || "Unknown"}
               </p>
 
               <button

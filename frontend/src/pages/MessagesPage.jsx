@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import {
   getMessagesByRelation,
   sendMessage,
@@ -7,6 +8,7 @@ import {
 import "../styles/messages.css";
 
 export default function MessagesPage() {
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
 
   const [relationId, setRelationId] = useState(
@@ -71,11 +73,11 @@ export default function MessagesPage() {
     <section className="messages-page">
       <h1 className="messages-page__title">Messages</h1>
 
-      <p className="messages-page__subtitle">
+      <h2 className="messages-page__subtitle">
         {relationId
           ? `Conversation for relation #${relationId}`
           : "Select a relation to load messages."}
-      </p>
+      </h2>
 
       <div className="messages-page__controls">
         <input
@@ -119,7 +121,9 @@ export default function MessagesPage() {
           messages.map((message) => (
             <article key={message.id} className="messages-page__card">
               <p className="messages-page__meta">
-                <strong>Sender ID:</strong> {message.senderId}
+                <strong>
+                {message.senderId === user?.id ? "You" : message.sender?.email || "Unknown user"}
+                  </strong> 
               </p>
               <p className="messages-page__content">{message.content}</p>
             </article>

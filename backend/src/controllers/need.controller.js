@@ -47,6 +47,13 @@ export async function getOpenNeeds(req, res) {
   try {
     const needs = await Need.findAll({
       where: { status: "open" },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "email"],
+        },
+      ],
       order: [["createdAt", "DESC"]],
     });
 

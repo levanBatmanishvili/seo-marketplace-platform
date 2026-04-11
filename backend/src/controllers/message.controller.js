@@ -69,6 +69,13 @@ export async function getMessages(req, res) {
 
     const messages = await Message.findAll({
       where: { relationId },
+      include: [
+        {
+          model: User,
+          as: "sender",
+          attributes: ["id", "email"],
+        },
+      ],
       order: [["createdAt", "ASC"]],
     });
 
