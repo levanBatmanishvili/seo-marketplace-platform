@@ -2,7 +2,11 @@ import { User, Profile, ExpertProfile } from "../models/index.js";
 
 export async function getExperts(req, res) {
   try {
-    const experts = await User.findAll({
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const offset = (page - 1) * limit;
+
+    const { count, rows: experts } = await User.findAndCountAll({
       where: { role: "expert" },
       attributes: ["id", "email", "role"],
       include: [
@@ -19,10 +23,20 @@ export async function getExperts(req, res) {
           ],
         },
       ],
+      limit,
+      offset,
+      distinct: true,
+      order: [["createdAt", "DESC"]],
     });
 
     return res.status(200).json({
       experts,
+      pagination: {
+        page,
+        limit,
+        totalItems: count,
+        totalPages: Math.ceil(count / limit),
+      },
     });
   } catch (error) {
     console.error("Get experts error:", error);

@@ -45,7 +45,11 @@ export async function getMyNeeds(req, res) {
 
 export async function getOpenNeeds(req, res) {
   try {
-    const needs = await Need.findAll({
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const offset = (page - 1) * limit;
+
+    const { count, rows: needs } = await Need.findAndCountAll({
       where: { status: "open" },
       include: [
         {
@@ -54,11 +58,20 @@ export async function getOpenNeeds(req, res) {
           attributes: ["id", "email"],
         },
       ],
+      limit,
+      offset,
+      distinct: true,
       order: [["createdAt", "DESC"]],
     });
 
     return res.status(200).json({
       needs,
+      pagination: {
+        page,
+        limit,
+        totalItems: count,
+        totalPages: Math.ceil(count / limit),
+      },
     });
   } catch (error) {
     console.error("Get open needs error:", error);
