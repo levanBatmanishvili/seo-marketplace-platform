@@ -115,7 +115,12 @@ export default function MessagesPage() {
           </div>
         ) : (
           messages.map((message) => (
-            <article key={message.id} className="messages-page__card">
+            <article key={message.id}
+            className={`messages-page__card ${
+              message.senderId === user?.id
+                ? "messages-page__card--own"
+                : "messages-page__card--other"
+            }`}>
               <p className="messages-page__meta">
                 <strong>
                   {message.sender?.profile?.displayName ||

@@ -71,26 +71,33 @@
   }
   
   .messages-page__list {
-    display: grid;
-    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     margin-bottom: 24px;
   }
   
   .messages-page__card {
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 16px;
-    background: #ffffff;
+    max-width: 75%;
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: rgb(233, 234, 213);
+  }
+
+  .messages-page__card--other {
+    align-self: flex-start;
+    background: #deefef;
   }
 
   .messages-page__meta {
-    margin-bottom: 8px;
-    color: #6b7280;
-    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: #787e89;
+    font-size: 0.9rem;
   }
   
   .messages-page__content {
-    color: #111827;
+    color: #0a0b0c;
+    line-height: 1.5;
   }
   
   .messages-page__form {
@@ -104,5 +111,9 @@
     .messages-page__controls {
       flex-direction: row;
       align-items: center;
+    }
+
+    .messages-page__card {
+      max-width: 65%;
     }
   }
