@@ -153,6 +153,34 @@
   opacity: 0.9;
 }
 
+.browse-experts__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.browse-experts__page-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background-color: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.browse-experts__page-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.browse-experts__page-info {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
 /* =========================
    Tablet
 ========================= */

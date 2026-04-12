@@ -15,12 +15,15 @@ export default function BrowseExpertsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [experienceFilter, setExperienceFilter] = useState("all");
   const [needFilter, setNeedFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const expertsData = await getExperts();
+        const expertsData = await getExperts(page, 6);
         setExperts(expertsData.experts || []);
+        setPagination(expertsData.pagination || null);
 
         const needsData = await getMyNeeds();
         setMyNeeds(needsData.needs || []);
@@ -218,6 +221,33 @@ export default function BrowseExpertsPage() {
           ))
         )}
       </div>
+      {pagination && pagination.totalPages > 1 && (
+        <div className="browse-experts__pagination">
+          <button
+            type="button"
+            className="browse-experts__page-button"
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+          >
+            Previous
+          </button>
+
+          <span className="browse-experts__page-info">
+            Page {pagination.page} of {pagination.totalPages}
+          </span>
+
+          <button
+            type="button"
+            className="browse-experts__page-button"
+            onClick={() =>
+              setPage((prev) => Math.min(prev + 1, pagination.totalPages))
+            }
+            disabled={page === pagination.totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </section>
   );
 }
